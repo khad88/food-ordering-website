@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Đánh giá & Phản hồi - KhoaFood</title>
+    <link rel="stylesheet" href="/css/reviews.css">
+</head>
+<body>
+    <header>
+        <div class="logo">KhoaFood Admin</div>
+        <nav>
+            <a href="home.html">Trang chủ</a>
+            <a href="reviews.html" class="active">Đánh Giá & Phản Hồi</a>
+        </nav>
+        <div class="user-actions">
+            <button class="logout-btn">Đăng xuất</button>
+        </div>
+    </header>
+
+    <div class="admin-container">
+        <aside class="sidebar">
+            <ul>
+                <li><a href="admin_dashboard.html">Tổng Quan</a></li>
+                <li><a href="orders.html">Đơn Hàng</a></li>
+                <li><a href="product_management.html">Sản Phẩm</a></li>
+                <li><a href="customers.html">Khách Hàng</a></li>
+                <li><a href="promotions.html">Khuyến Mãi</a></li>
+                <li><a href="reviews.html">Đánh Giá & Phản Hồi</a></li>
+                <li><a href="employee.html">Nhân viên</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <section id="reviews" class="reviews-section">
+                <h2>Quản lý đánh giá & phản hồi</h2>
+                <table class="reviews-table">
+                    <thead>
+                        <tr>
+                            <th>Khách hàng</th>
+                            <th>Sản phẩm</th>
+                            <th>Đánh giá</th>
+                            <th>Phản hồi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Nguyễn Văn A</td>
+                            <td>Pizza</td>
+                            <td>5 sao</td>
+                            <td>Rất ngon!</td>
+                            
+                        </tr>
+                        <tr>
+                            <td>Nguyễn Văn A</td>
+                            <td>Pizza</td>
+                            <td>5 sao</td>
+                            <td>Rất ngon!</td>
+                            
+                        </tr>
+                        <tr>
+                            <td>Nguyễn Văn A</td>
+                            <td>Pizza</td>
+                            <td>5 sao</td>
+                            <td>Rất ngon!</td>
+                            
+                        </tr>
+                        <!-- Thêm các hàng khác tương tự -->
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <p>© 2025 KhoaFood. ALL RIGHT RESERVED.</p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.approve-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // Thêm logic để duyệt đánh giá
+            });
+        });
+
+        document.querySelectorAll('.delete-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // Thêm logic để ẩn đánh giá
+            });
+        });
+    </script>
+</body>
+</html>

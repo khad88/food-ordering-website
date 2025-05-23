@@ -1,0 +1,130 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #FFF9EA;
+    padding: 15px 20px;
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: black;
+}
+
+nav a.active {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.user-actions .logout-btn {
+    padding: 10px 20px;
+    background-color: #ffcb45;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+.admin-container {
+    display: flex;
+    min-height: calc(100vh - 60px); 
+}
+
+.sidebar {
+    width: 200px;
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    height: 50vh; 
+    position: sticky; 
+    top: 0; 
+    overflow-y: auto; 
+  }
+  
+  .sidebar ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .sidebar ul li {
+    margin-bottom: 10px;
+  }
+  
+  .sidebar ul li a {
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  .sidebar ul li a:hover {
+    text-decoration: underline;
+  }
+
+
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: #f8f8f8;
+}
+
+button {
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.edit-btn {
+    background-color: green;
+    color: white;
+}
+
+.delete-btn {
+    background-color: red;
+    color: white;
+}
+
+.reply-btn {
+    background-color: green;
+    color: white;
+}
+
+footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    background-color: #FFF9EA;
+    padding: 20px;
+    text-align: center;
+}

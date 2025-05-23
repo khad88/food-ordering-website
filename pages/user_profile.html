@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông tin người dùng - KhoaFood</title>
+    <link rel="stylesheet" href="/css/user_profile.css">
+</head>
+<body>
+    <header>
+        <div class="logo">KhoaFood</div>
+        <nav>
+            <a href="home.html">Trang chủ</a>
+            <a href="menu.html">Menu</a>
+            <a href="how_it_works.html">Cách hoạt động</a>
+            <a href="about_us.html">Về chúng tôi</a>
+            <a href="user_profile.html" class="active">Tài khoản</a>
+            <a href="admin_dashboard.html">Admin</a>
+        </nav>
+        <div class="user-actions">
+            <a href="chart.html">
+                <button class="cart">Giỏ hàng</button>
+            </a>
+            <a href="logout.html">
+                <button class="logout-btn">Đăng xuất</button>
+            </a>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="general-info">Thông tin chung</button>
+            <button class="tab-btn" data-tab="settings">Cài đặt</button>
+        </div>
+
+        <!-- Thông tin chung -->
+        <section id="general-info" class="tab-content active">
+        <div class="info-layout">
+            <!-- Thông tin cá nhân -->
+            <div class="user-info">
+                <h2>Thông tin cá nhân</h2>
+                <div class="info-container">
+                    <div class="avatar">
+                        <img src="/images/user_avatar.png" alt="Avatar">
+                    </div>
+                    <div class="details">
+                        <p><strong>Tên:</strong> Nguyễn Văn A</p>
+                        <p><strong>Email:</strong> nguyenvana@example.com</p>
+                        <p><strong>Số điện thoại:</strong> 0123 456 789</p>
+                        <p><strong>Địa chỉ:</strong> 123 Đường ABC, Quận XYZ, Hà Nội</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lịch sử mua hàng -->
+            <div class="order-history">
+                <h2>Lịch sử mua hàng</h2>
+                <table class="order-table">
+                    <thead>
+                        <tr>
+                            <th>Mã đơn hàng</th>
+                            <th>Ngày đặt</th>
+                            <th>Tổng tiền</th>
+                            <th>Trạng thái</th>
+                            <th>Chi tiết</th>
+                        </tr>
+                    </thead>
+                    <tbody id="order-history">
+                        
+                    </tbody>
+                </table>
+                <div class="pagination">
+                    
+                </div>
+            </div>
+        </div>
+        </section>
+
+        <section id="settings" class="tab-content">
+            <h2>Cài đặt</h2>
+        
+            <!-- Đổi thông tin cá nhân -->
+            <div class="edit-user-info">
+                <h3>Đổi thông tin cá nhân</h3>
+                <form id="edit-user-form">
+                    
+        
+                    <!-- Đổi tên -->
+                    <div class="settings-row">
+                        <label for="edit-name">Tên:</label>
+                        <input type="text" id="edit-name" placeholder="Nhập tên mới" value="Nguyễn Văn A" required>
+                    </div>
+        
+                    <!-- Đổi số điện thoại -->
+                    <div class="settings-row">
+                        <label for="edit-phone">Số điện thoại:</label>
+                        <input type="text" id="edit-phone" placeholder="Nhập số điện thoại mới" value="0123 456 789" required>
+                    </div>
+        
+                    <!-- Đổi địa chỉ -->
+                    <div class="settings-row">
+                        <label for="edit-address">Địa chỉ:</label>
+                        <input type="text" id="edit-address" placeholder="Nhập địa chỉ mới" value="123 Đường ABC, Quận XYZ, Hà Nội" required>
+                    </div>
+        
+                    <button type="submit" class="cta-btn">Lưu thông tin</button>
+                </form>
+            </div>
+        
+            <!-- Đổi mật khẩu -->
+            <div class="change-password">
+                <h3>Đổi mật khẩu</h3>
+                <form id="change-password-form">
+                    <div class="settings-row">
+                        <label for="current-password">Mật khẩu hiện tại:</label>
+                        <input type="password" id="current-password" placeholder="Nhập mật khẩu hiện tại" required>
+                    </div>
+                    <div class="settings-row">
+                        <label for="new-password">Mật khẩu mới:</label>
+                        <input type="password" id="new-password" placeholder="Nhập mật khẩu mới" required>
+                    </div>
+                    <div class="settings-row">
+                        <label for="confirm-password">Xác nhận mật khẩu mới:</label>
+                        <input type="password" id="confirm-password" placeholder="Nhập lại mật khẩu mới" required>
+                    </div>
+                    <button type="submit" class="cta-btn">Đổi mật khẩu</button>
+                </form>
+            </div>
+        </section>
+
+        
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div>
+                <h4>Company</h4>
+                <a href="#">About Us</a>
+                <a href="#">How It Work</a>
+                <a href="#">Career</a>
+            </div>
+            <div>
+                <h4>Policy</h4>
+                <a href="#">FAQ</a>
+                <a href="#">Privacy</a>
+                <a href="#">Shipping</a>
+            </div>
+            <div>
+                <h4>Get In Touch</h4>
+                <p>+62 896 7311 2766</p>
+                <p>food@example.com</p>
+            </div>
+            <div>
+                <div class="logo">KhoaFood</div>
+                <p>Hà Đông, Hà Nội</p>
+                <div class="social-icons">
+                    <a href="#">Facebook</a>
+                    <a href="#">Instagram</a>
+                    <a href="#">Twitter</a>
+                </div>
+            </div>
+        </div>
+        <p class="copyright">© 2025 KhoaFood. ALL RIGHT RESERVED.</p>
+    </footer>
+
+    <script src="/js/user_profile.js"></script>
+</body>
+</html>

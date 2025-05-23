@@ -1,0 +1,157 @@
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #FFF9EA;
+  width: 100%;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+nav a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: #333;
+}
+
+nav a.active {
+  font-weight: bold;
+}
+
+.user-actions {
+  display: flex;
+  align-items: center;
+}
+
+.cart {
+  padding: 10px 20px;
+  background-color: #ffcb45;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.login-btn {
+  padding: 10px 20px;
+  background-color: #ffcb45;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+main {
+  padding: 40px 20px;
+  text-align: center;
+  width: 100%;
+}
+
+footer {
+  background-color: #FFF9EA;
+  padding: 40px 20px;
+  width: 100%;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.footer-content > div {
+  margin-bottom: 20px;
+}
+
+.footer-content h4 {
+  margin-bottom: 10px;
+}
+
+.footer-content a,
+.footer-content p {
+  display: block;
+  margin-bottom: 5px;
+  color: #666;
+  text-decoration: none;
+}
+
+.social-icons a {
+  margin-right: 10px;
+}
+
+.social-icons a img {
+  width: 20px;
+  height: 20px;
+}
+
+.social-icons {
+  display: flex;
+  gap: 10px;
+}
+
+copyright {
+  text-align: center;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #ddd;
+  width: 100%;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .menu-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  nav, .user-actions {
+    margin-top: 20px;
+  }
+
+  .menu-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .footer-content > div {
+    flex-basis: 50%;
+  }
+}
+
+@media (max-width: 480px) {
+  .filters button {
+    margin-bottom: 10px;
+  }
+
+  .menu-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-content > div {
+    flex-basis: 100%;
+  }
+}

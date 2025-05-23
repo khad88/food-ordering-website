@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Khuyến mãi - KhoaFood</title>
+    <link rel="stylesheet" href="/css/promotions.css">
+</head>
+<body>
+    <header>
+        <div class="logo">KhoaFood Admin</div>
+        <nav>
+            <a href="home.html">Trang chủ</a>
+            <a href="promotions.html" class="active">Khuyến Mãi</a>
+        </nav>
+        <div class="user-actions">
+            <button class="logout-btn">Đăng xuất</button>
+        </div>
+    </header>
+
+    <div class="admin-container">
+        <aside class="sidebar">
+            <ul>
+                <li><a href="admin_dashboard.html">Tổng Quan</a></li>
+                <li><a href="orders.html">Đơn Hàng</a></li>
+                <li><a href="product_management.html">Sản Phẩm</a></li>
+                <li><a href="customers.html">Khách Hàng</a></li>
+                <li><a href="promotions.html" class="active">Khuyến Mãi</a></li>
+                <li><a href="reviews.html">Đánh Giá & Phản Hồi</a></li>
+                <li><a href="employee.html">Nhân viên</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <section id="promotions" class="promotions-section">
+                <h2>Quản lý khuyến mãi</h2>
+                <a href="add_promotions.html">
+                    <button class="add-btn">Thêm khuyến mãi</button>
+                </a>
+                <table class="promotions-table">
+                    <thead>
+                        <tr>
+                            <th>Mã giảm giá</th>
+                            <th>Chương trình</th>
+                            <th>Thời gian</th>
+                            <th>Điều kiện</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>KM2025</td>
+                            <td>Giảm giá 20%</td>
+                            <td>01/01/2025 - 31/01/2025</td>
+                            <td>Đơn hàng trên 500,000 VND</td>
+                            <td>
+                                <button class="edit-btn">Sửa</button>
+                                <button class="delete-btn">Xóa</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>KM2025</td>
+                            <td>Giảm giá 20%</td>
+                            <td>01/01/2025 - 31/01/2025</td>
+                            <td>Đơn hàng trên 500,000 VND</td>
+                            <td>
+                                <button class="edit-btn">Sửa</button>
+                                <button class="delete-btn">Xóa</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>KM2025</td>
+                            <td>Giảm giá 20%</td>
+                            <td>01/01/2025 - 31/01/2025</td>
+                            <td>Đơn hàng trên 500,000 VND</td>
+                            <td>
+                                <button class="edit-btn">Sửa</button>
+                                <button class="delete-btn">Xóa</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <p>© 2025 KhoaFood. ALL RIGHT RESERVED.</p>
+    </footer>
+
+    <script>
+        document.querySelector('.add-btn').addEventListener('click', () => {
+            window.location.href = 'add_promotion.html';
+        });
+
+        document.querySelectorAll('.edit-btn').forEach(button => {
+            button.addEventListener('click', () => {
+            });
+        });
+
+        document.querySelectorAll('.delete-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                
+            });
+        });
+    </script>
+</body>
+</html>

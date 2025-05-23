@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Nhân Viên - KhoaFood</title>
+    <link rel="stylesheet" href="/css/employee_dashboard.css">
+</head>
+<body>
+    <header>
+        <div class="logo">KhoaFood Nhân viên</div>
+        <nav>
+            <a href="home.html">Trang chủ</a>
+            <a href="#orders" class="active">Đơn Hàng</a>
+        </nav>
+        <div class="user-actions">
+            <button class="logout-btn">Đăng xuất</button>
+        </div>
+    </header>
+
+    <div class="admin-container">
+        <aside class="sidebar">
+            <ul>
+                <li><a href="#orders" class="active">Đơn Hàng</a></li>
+                <li><a href="#reviews">Đánh Giá & Phản Hồi</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <section id="orders" class="orders-section">
+                <h2>Danh sách đơn hàng</h2>
+                <table class="orders-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Khách hàng</th>
+                            <th>Sản phẩm</th>
+                            <th>Số lượng</th>
+                            <th>Tổng tiền</th>
+                            <th>Trạng thái</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Nguyễn Văn A</td>
+                            <td>Pizza</td>
+                            <td>2</td>
+                            <td>400,000 VND</td>
+                            <td>Đang xử lý</td>
+                            <td>
+                                <button class="edit-btn">Xác nhận</button>
+                                <button class="delete-btn">Hủy</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>Nguyễn Văn A</td>
+                            <td>Pizza</td>
+                            <td>2</td>
+                            <td>400,000 VND</td>
+                            <td>Đang xử lý</td>
+                            <td>
+                                <button class="edit-btn">Xác nhận</button>
+                                <button class="delete-btn">Hủy</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="reviews" class="reviews-section" style="display: none;">
+                <h2>Đánh Giá & Phản Hồi</h2>
+                <table class="reviews-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Khách hàng</th>
+                            <th>Sản phẩm</th>
+                            <th>Đánh giá</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Nguyễn Văn A</td>
+                            <td>Pizza</td>
+                            <td>Rất ngon!</td>
+                            <td>
+                                <button class="reply-btn">Phản hồi</button>
+                                <button class="delete-btn">Xóa</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>Nguyễn Văn A</td>
+                            <td>Pizza</td>
+                            <td>Rất ngon!</td>
+                            <td>
+                                <button class="reply-btn">Phản hồi</button>
+                                <button class="delete-btn">Xóa</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>Nguyễn Văn A</td>
+                            <td>Pizza</td>
+                            <td>Rất ngon!</td>
+                            <td>
+                                <button class="reply-btn">Phản hồi</button>
+                                <button class="delete-btn">Xóa</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>Nguyễn Văn A</td>
+                            <td>Pizza</td>
+                            <td>Rất ngon!</td>
+                            <td>
+                                <button class="reply-btn">Phản hồi</button>
+                                <button class="delete-btn">Xóa</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <p>© 2025 KhoaFood. ALL RIGHT RESERVED.</p>
+    </footer>
+
+    <script src="/js/employee_dashboard.js"></script>
+</body>
+</html>

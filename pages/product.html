@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product - KhoaFood</title>
+    <link rel="stylesheet" href="/css/product.css">
+</head>
+<body>
+    <header>
+        <div class="logo">KhoaFood</div>
+        <nav>
+            <a href="home.html" class="active">Trang chủ</a>
+            <a href="menu.html">Menu</a>
+            <a href="how_it_works.html">Cách hoạt động</a>
+            <a href="about_us.html">Về chúng tôi</a>
+            <a href="user_profile.html">Tài khoản</a>
+            <a href="admin_dashboard.html">Admin</a>
+        </nav>
+        <div class="user-actions">
+            <a href="chart.html">
+                <button class="cart">Giỏ hàng</button>
+            </a>
+            <a href="login_register.html">
+                <button class="login-btn">Đăng nhập/ Đăng ký</button>
+            </a>    
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="product-details">
+            <div class="product-image">
+                <img src="/images/pizza.png" alt="Pizza ngon của KhoaFood">
+            </div>
+            <div class="product-info">
+                <h1>Pizza Hải Sản</h1>
+                <div class="product-rating">⭐⭐⭐⭐☆ (12 đánh giá)</div>
+                <p class="product-description">Món pizza thơm ngon, đậm vị với hải sản tươi sống và phô mai béo ngậy.</p>
+                <div class="product-price"><strong>20.000 VND</strong></div>
+
+                <div class="product-size">
+                    <strong>Chọn kích thước:</strong>
+                    <button class="size-btn active">250g</button>
+                    <button class="size-btn">500g</button>
+                    <button class="size-btn">1kg</button>
+                    <button class="size-btn">2kg</button>
+                </div>
+
+                <div class="product-quantity">
+                    <strong>Số lượng:</strong>
+                    <button class="quantity-btn">-</button>
+                    <span class="quantity">1</span>
+                    <button class="quantity-btn">+</button>
+                </div>
+
+                <button class="cta-btn">Thêm vào giỏ</button>
+                <a href="chart.html">
+                    <button class="cta-btn">Mua</button>
+                </a>
+            </div>
+        </section>
+
+        <section id="user-reviews" class="user-reviews">
+            <h2>Phản hồi và Đánh giá của Người dùng</h2>
+            <div class="reviews-container">
+                <div class="review-item">
+                    <div class="review-header">
+                        <img src="/images/user_avatar.png" alt="Nguyễn Văn A" class="avatar">
+                        <h3>Nguyễn Văn A</h3>
+                    </div>
+                    <p>"Pizza rất ngon, giao hàng nhanh chóng!"</p>
+                    <div class="rating">
+                        <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span>
+                    </div>
+                    <div class="shop-reply">
+                        <div class="reply-header">
+                            <img src="/images/shop_avatar.jpg" alt="Shop" class="avatar">
+                            <strong>Phản hồi từ shop:</strong>
+                        </div>
+                        <p>Cảm ơn bạn đã ủng hộ KhoaFood! Chúng tôi rất vui vì bạn hài lòng.</p>
+                    </div>
+                </div>
+                <div class="review-item">
+                    <div class="review-header">
+                        <img src="/images/user_avatar.png" alt="Trần Thị B" class="avatar">
+                        <h3>Trần Thị B</h3>
+                    </div>
+                    <p>"Hương vị tuyệt vời, nhưng giá hơi cao."</p>
+                    <div class="rating">
+                        <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>☆</span>
+                    </div>
+                    <div class="shop-reply">
+                        <div class="reply-header">
+                            <img src="/images/shop_avatar.jpg" alt="Shop" class="avatar">
+                            <strong>Phản hồi từ shop:</strong>
+                        </div>
+                        <p>Cảm ơn bạn đã góp ý! Chúng tôi sẽ cân nhắc để cải thiện giá cả.</p>
+                    </div>
+                </div>
+            </div>
+            <form id="review-form" class="review-form">
+                <h3>Gửi đánh giá của bạn</h3>
+                <textarea id="review-text" placeholder="Viết đánh giá của bạn..." required></textarea>
+                <label for="review-rating">Đánh giá:</label>
+                <select id="review-rating" required>
+                    <option value="5">5 ⭐</option>
+                    <option value="4">4 ⭐</option>
+                    <option value="3">3 ⭐</option>
+                    <option value="2">2 ⭐</option>
+                    <option value="1">1 ⭐</option>
+                </select>
+                <button type="submit">Gửi đánh giá</button>
+            </form>
+        </section>
+    
+        <section class="related-products">
+            <h2>Sản phẩm liên quan</h2>
+            <div class="related-products-grid">
+                <div class="related-product-item">
+                    <img src="/images/trung_op_la.png" alt="Trứng ốp la">
+                    <p>Trứng ốp la</p>
+                    <span class="current-price">25.000 VND</span>
+                </div>
+                <div class="related-product-item">
+                    <img src="/images/salad.jpg" alt="Salad rau củ">
+                    <p>Salad rau củ</p>
+                    <span class="current-price">30.000 VND</span>
+                </div>
+                <div class="related-product-item">
+                    <img src="/images/sushi.jpg" alt="Sushi cá hồi">
+                    <p>Sushi cá hồi</p>
+                    <span class="current-price">40.000 VND</span>
+                </div>
+                <div class="related-product-item">
+                    <img src="/images/banh_mi.jpg" alt="Bánh mì thịt">
+                    <p>Bánh mì thịt</p>
+                    <span class="current-price">15.000 VND</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p class="copyright">© 2025 KhoaFood. ALL RIGHTS RESERVED.</p>
+        </div>
+    </footer>
+    <script src="js/api/config.js"></script>
+    <script src="js/api/auth-service.js"></script>
+    <script src="js/api/product-service.js"></script>
+    <script src="js/api/cart-service.js"></script>
+    <script src="js/pages/product.js"></script>
+</body>
+</html>

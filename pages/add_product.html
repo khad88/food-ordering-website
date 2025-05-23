@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thêm Sản phẩm - KhoaFood</title>
+    <link rel="stylesheet" href="/css/add_product.css">
+</head>
+<body>
+    <header>
+        <div class="logo">KhoaFood Admin</div>
+        <nav>
+            <a href="home.html">Trang chủ</a>
+            <a href="product_management.html" class="active">Quản lý sản phẩm</a>
+        </nav>
+        <div class="user-actions">
+            <button class="logout-btn">Đăng xuất</button>
+        </div>
+    </header>
+
+    <div class="admin-container">
+        <aside class="sidebar">
+            <ul>
+                <li><a href="admin_dashboard.html">Tổng Quan</a></li>
+                <li><a href="orders.html">Đơn Hàng</a></li>
+                <li><a href="product_management.html">Sản Phẩm</a></li>
+                <li><a href="customers.html">Khách Hàng</a></li>
+                <li><a href="promotions.html">Khuyến Mãi</a></li>
+                <li><a href="reviews.html">Đánh Giá & Phản Hồi</a></li>
+                <li><a href="employee.html">Nhân viên</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <section id="add-product" class="add-product-section">
+                <h2>Thêm Sản phẩm</h2>
+                <form>
+                    <label for="product-name">Tên sản phẩm:</label>
+                    <input type="text" id="product-name" name="product-name" required>
+
+                    <label for="category">Danh mục:</label>
+                    <select id="category" name="category" required>
+                        <option value="an-nhe">Ăn nhẹ</option>
+                        <option value="mon-chinh">Món chính</option>
+                        <option value="do-uong">Đồ uống</option>
+                        <option value="trang-mieng">Tráng miệng</option>
+                    </select>
+
+                    <label for="price">Giá:</label>
+                    <input type="text" id="price" name="price" required>
+
+                    <label for="quantity">Số lượng:</label>
+                    <input type="number" id="quantity" name="quantity" required>
+
+                    <label for="image">Hình ảnh:</label>
+                    <input type="file" id="image" name="image" required>
+
+                    <label for="description">Mô tả:</label>
+                    <textarea id="description" name="description" required></textarea>
+
+                    <a href="product_management.html">
+                        <button type="submit" class="submit-btn">Thêm Sản phẩm</button>
+                    </a>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <p>© 2025 KhoaFood. ALL RIGHT RESERVED.</p>
+    </footer>
+</body>
+</html>

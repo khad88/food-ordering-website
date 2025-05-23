@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Tổng Quan - KhoaFood</title>
+    <link rel="stylesheet" href="/css/admin_dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <div class="logo">KhoaFood Admin</div>
+        <nav>
+            <a href="home.html">Trang chủ</a>
+            <a href="admin_dashboard.html" class="active">Tổng Quan</a>
+        </nav>
+        <div class="user-actions">
+            <a href="employee_dashboard.html">
+                <button class="logout-btn">Đăng xuất</button>
+            </a>>
+        </div>
+    </header>
+
+    <div class="admin-container">
+        <aside class="sidebar">
+            <ul>
+                <li><a href="admin_dashboard.html">Tổng Quan</a></li>
+                <li><a href="orders.html">Đơn Hàng</a></li>
+                <li><a href="product_management.html">Sản Phẩm</a></li>
+                <li><a href="customers.html">Khách Hàng</a></li>
+                <li><a href="promotions.html">Khuyến Mãi</a></li>
+                <li><a href="reviews.html">Đánh Giá & Phản Hồi</a></li>
+                <li><a href="employee.html">Nhân viên</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <section id="overview" class="dashboard-overview">
+                <h1>Dashboard Tổng Quan</h1>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <h3>Tổng số khách hàng 7 ngay</h3>
+                        <p>1500</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>Số đơn hàng đang xử lý</h3>
+                        <p>45</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>Doanh thu 7 ngay</h3>
+                        <p>5,000,000 VND</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>Sản phẩm bán chạy theo danh muc</h3>
+                        <p>Pizza</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="statistics" class="charts">
+                <h2>Biểu đồ doanh thu / tuần</h2>
+                <div class="chart-container">
+                    <canvas id="revenueChart"></canvas>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <p>© 2025 KhoaFood. ALL RIGHT RESERVED.</p>
+    </footer>
+
+    <script>
+        const ctx = document.getElementById('revenueChart').getContext('2d');
+        const revenueChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Ngày 1', 'Ngày 2', 'Ngày 3', 'Ngày 4', 'Ngày 5', 'Ngày 6', 'Ngày 7'],
+                datasets: [{
+                    label: 'Doanh thu (VND)',
+                    data: [1200000, 1500000, 1800000, 2000000, 2200000, 2500000, 3000000],
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

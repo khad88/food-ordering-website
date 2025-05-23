@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý đơn hàng - KhoaFood</title>
+    <link rel="stylesheet" href="/css/orders.css">
+</head>
+<body>
+    <header>
+        <div class="logo">KhoaFood Admin</div>
+        <nav>
+            <a href="home.html">Trang chủ</a>
+            <a href="orders.html" class="active">Quản lý đơn hàng</a>
+        </nav>
+        <div class="user-actions">
+            <button class="logout-btn">Đăng xuất</button>
+        </div>
+    </header>
+
+    <div class="admin-container">
+        <aside class="sidebar">
+            <ul>
+                <li><a href="admin_dashboard.html">Tổng Quan</a></li>
+                <li><a href="orders.html">Đơn Hàng</a></li>
+                <li><a href="product_management.html">Sản Phẩm</a></li>
+                <li><a href="customers.html">Khách Hàng</a></li>
+                <li><a href="promotions.html">Khuyến Mãi</a></li>
+                <li><a href="reviews.html">Đánh Giá & Phản Hồi</a></li>
+                <li><a href="employee.html">Nhân viên</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <section id="orders" class="orders-section">
+                <h2>Danh sách đơn hàng</h2>
+                <table class="orders-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Khách hàng</th>
+                            <th>Sản phẩm</th>
+                            <th>Số lượng</th>
+                            <th>Tổng tiền</th>
+                            <th>Trạng thái</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Nguyễn Văn A</td>
+                            <td>Pizza</td>
+                            <td>2</td>
+                            <td>400,000 VND</td>
+                            <td>Chờ xác nhận</td>
+                            <td>
+                                <button class="edit-btn">Xác nhận</button>
+                                <button class="delete-btn">Hủy</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Trần Thị Bình</td>
+                            <td>Cua hoàng đế</td>
+                            <td>3</td>
+                            <td>1,500,000 VND</td>
+                            <td>Đang giao</td>
+                            <td>
+                                <button class="edit-btn">Xác nhận</button>
+                                <button class="delete-btn">Hủy</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Nguyễn Nhật Thành</td>
+                            <td>Ramen</td>
+                            <td>2</td>
+                            <td>400,000 VND</td>
+                            <td>Đã giao</td>
+                            <td>
+                                <button class="edit-btn">Xác nhận</button>
+                                <button class="delete-btn">Hủy</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <p>© 2025 KhoaFood. ALL RIGHT RESERVED.</p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.edit-btn').forEach(button => {
+            button.addEventListener('click', () => {
+            });
+        });
+
+        document.querySelectorAll('.delete-btn').forEach(button => {
+            button.addEventListener('click', () => {
+            });
+        });
+    </script>
+</body>
+</html>
