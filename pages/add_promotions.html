@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thêm Khuyến mãi - KhoaFood</title>
+    <title>Thêm/Sửa Khuyến mãi - KhoaFood</title>
     <link rel="stylesheet" href="/css/add_promotions.css">
 </head>
 <body>
@@ -14,7 +14,7 @@
             <a href="promotions.html" class="active">Khuyến Mãi</a>
         </nav>
         <div class="user-actions">
-            <button class="logout-btn">Đăng xuất</button>
+            <button class="logout-btn" onclick="logout()">Đăng xuất</button>
         </div>
     </header>
 
@@ -24,22 +24,25 @@
                 <li><a href="admin_dashboard.html">Tổng Quan</a></li>
                 <li><a href="orders.html">Đơn Hàng</a></li>
                 <li><a href="product_management.html">Sản Phẩm</a></li>
-                <li><a href="customers.html">Khách Hàng</a></li>
-                <li><a href="promotions.html">Khuyến Mãi</a></li>
-                <li><a href="reviews.html">Đánh Giá & Phản Hồi</a></li>
+                <li><a href="promotions.html" class="active">Khuyến Mãi</a></li>
                 <li><a href="employee.html">Nhân viên</a></li>
             </ul>
         </aside>
 
         <main class="main-content">
             <section id="add-promotion" class="add-promotion-section">
-                <h2>Thêm Khuyến mãi</h2>
-                <form>
-                    <label for="promo-code">Mã giảm giá:</label>
-                    <input type="text" id="promo-code" name="promo-code" required>
+                <h2 id="form-title">Thêm Khuyến mãi</h2>
+                <form id="promotion-form">
+                    <input type="hidden" id="promotion-id" name="promotion-id">
+                    
+                    <label for="promo-title">Tên chương trình:</label>
+                    <input type="text" id="promo-title" name="promo-title" required>
 
-                    <label for="promo-description">Chương trình:</label>
-                    <input type="text" id="promo-description" name="promo-description" required>
+                    <label for="promo-description">Mô tả:</label>
+                    <textarea id="promo-description" name="promo-description" required></textarea>
+
+                    <label for="discount-percent">Phần trăm giảm giá:</label>
+                    <input type="number" id="discount-percent" name="discount-percent" min="0" max="100" required>
 
                     <label for="start-date">Ngày bắt đầu:</label>
                     <input type="date" id="start-date" name="start-date" required>
@@ -47,10 +50,13 @@
                     <label for="end-date">Ngày kết thúc:</label>
                     <input type="date" id="end-date" name="end-date" required>
 
-                    <label for="conditions">Điều kiện:</label>
-                    <textarea id="conditions" name="conditions" required></textarea>
+                    <label for="is-active">Trạng thái:</label>
+                    <select id="is-active" name="is-active" required>
+                        <option value="true">Hoạt động</option>
+                        <option value="false">Không hoạt động</option>
+                    </select>
 
-                    <button type="submit" class="submit-btn">Thêm Khuyến mãi</button>
+                    <button type="submit" class="submit-btn">Lưu</button>
                 </form>
             </section>
         </main>
@@ -59,5 +65,7 @@
     <footer>
         <p>© 2025 KhoaFood. ALL RIGHT RESERVED.</p>
     </footer>
+
+    <script src="/js/add_promotions.js"></script>
 </body>
 </html>

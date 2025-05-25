@@ -8,10 +8,30 @@ const User = db.users;
 const Cart = db.carts;
 const CartItem = db.cartItems;
 const Payment = db.payments;
+const Promotion = db.promotions;
+
+// Hàm kiểm tra và áp dụng khuyến mãi
+async function applyPromotion(totalPrice, promotionId) {
+  if (!promotionId) return totalPrice;
+
+  const promotion = await Promotion.findOne({
+    where: {
+      promotion_id: promotionId,
+      is_active: true,
+      start_date: { [db.Sequelize.Op.lte]: new Date() },
+      end_date: { [db.Sequelize.Op.gte]: new Date() }
+    }
+  });
+
+  if (!promotion) return totalPrice;
+
+  const discountAmount = (totalPrice * promotion.discount_percent) / 100;
+  return totalPrice - discountAmount;
+}
 
 exports.createFromCart = async (req, res) => {
   const userId = req.userId;
-  const { payment_method } = req.body;
+  const { payment_method, promotion_id } = req.body;
 
   const t = await db.sequelize.transaction();
 
@@ -54,14 +74,19 @@ exports.createFromCart = async (req, res) => {
       });
     }
 
-    console.log("📝 Tổng tiền:", totalPrice);
+    console.log("📝 Tổng tiền trước giảm giá:", totalPrice);
+
+    // Áp dụng mã giảm giá nếu có
+    const finalPrice = await applyPromotion(totalPrice, promotion_id);
+    console.log("📝 Tổng tiền sau giảm giá:", finalPrice);
 
     // Tạo đơn hàng
     console.log("🚀 Tạo đơn hàng...");
     const order = await Order.create({
       user_id: userId,
-      total_price: totalPrice,
-      status: 'Chờ xác nhận'
+      total_price: finalPrice,
+      status: 'Chờ xác nhận',
+      promotion_id: promotion_id
     }, { transaction: t });
 
     // Tạo chi tiết đơn hàng
@@ -99,9 +124,16 @@ exports.createFromCart = async (req, res) => {
     // Trả về đơn hàng mới
     const newOrder = await Order.findByPk(order.order_id, {
       include: [
-        OrderDetail,
+        {
+          model: OrderDetail,
+          include: [Product]
+        },
         User,
-        Payment
+        Payment,
+        {
+          model: Promotion,
+          attributes: ['title', 'discount_percent', 'description']
+        }
       ]
     });
 
@@ -113,196 +145,197 @@ exports.createFromCart = async (req, res) => {
   }
 };
 
-
 // Lấy tất cả đơn hàng (phân quyền)
 exports.getAllOrders = async (req, res) => {
-  try {
-    let where = {};
-    
-    // Nếu là người dùng, chỉ lấy đơn hàng của họ
-    if (req.userType === 'user') {
-      where.user_id = req.userId;
-    }
-    
-    const orders = await Order.findAll({
-      where,
-      include: [
-        { model: User, attributes: ['name', 'email', 'phone'] },
-        { 
-          model: OrderDetail,
-          include: [{ model: Product, attributes: ['name', 'price', 'image_url'] }]
-        },
-        Payment
-      ],
-      order: [['order_time', 'DESC']]
-    });
-    
-    res.send(orders);
-  } catch (error) {
-    res.status(500).send({ message: error.message });
-  }
-};
+    try {
+        const { page = 1, size = 10 } = req.query; // Lấy thông tin phân trang từ query
+        const limit = parseInt(size);
+        const offset = (parseInt(page) - 1) * limit;
 
+        let where = {};
+
+        // Nếu là người dùng, chỉ lấy đơn hàng của họ
+        if (req.userType === 'user') {
+            where.user_id = req.userId;
+        }
+
+        // Lấy danh sách đơn hàng từ cơ sở dữ liệu
+        const { count, rows } = await Order.findAndCountAll({
+            where,
+            include: [
+                { model: User, attributes: ['name', 'email', 'phone'] },
+                {
+                    model: OrderDetail,
+                    include: [{ model: Product, attributes: ['name', 'price', 'image_url'] }]
+                },
+                Payment
+            ],
+            order: [['order_time', 'DESC']],
+            limit,
+            offset
+        });
+
+        // Tính tổng số trang
+        const totalPages = Math.ceil(count / limit);
+
+        // Trả về dữ liệu phân trang
+        res.send({
+            totalItems: count,
+            totalPages,
+            currentPage: parseInt(page),
+            orders: rows
+        });
+    } catch (error) {
+        console.error("❌ Lỗi khi lấy danh sách đơn hàng:", error);
+        res.status(500).send({ message: error.message });
+    }
+};
 // Xem chi tiết đơn hàng
 exports.getOrderById = async (req, res) => {
-  try {
-    const orderId = req.params.id;
+    try {
+        const orderId = req.params.id;
 
-    // Tìm đơn hàng theo ID
-    const order = await Order.findByPk(orderId, {
-      include: [
-        { model: User, attributes: ['name', 'email', 'phone', 'address'] },
-        { model: OrderDetail, include: [Product] },
-        { model: OrderStatusHistory, order: [['changed_at', 'DESC']] },
-        Payment
-      ]
-    });
+        // Tìm đơn hàng theo ID
+        const order = await Order.findByPk(orderId, {
+            include: [
+                { model: User, attributes: ['name', 'email', 'phone', 'address'] },
+                {
+                    model: OrderDetail,
+                    include: [{ model: Product, attributes: ['name', 'price', 'image_url'] }]
+                },
+                Payment
+            ]
+        });
 
-    // Kiểm tra nếu đơn hàng không tồn tại
-    if (!order) {
-      return res.status(404).send({ message: "Đơn hàng không tồn tại!" });
+        // Kiểm tra nếu đơn hàng không tồn tại
+        if (!order) {
+            return res.status(404).send({ message: "Đơn hàng không tồn tại!" });
+        }
+
+        // Kiểm tra quyền truy cập
+        if (req.userType === 'user' && order.user_id !== req.userId) {
+            return res.status(403).send({ message: "Không có quyền truy cập đơn hàng này!" });
+        }
+
+        // Trả về chi tiết đơn hàng
+        res.send(order);
+    } catch (error) {
+        console.error("❌ Lỗi khi lấy chi tiết đơn hàng:", error);
+        res.status(500).send({ message: error.message });
     }
-
-    // Kiểm tra quyền truy cập
-    if (req.userType === 'user' && order.user_id !== req.userId) {
-      return res.status(403).send({ message: "Không có quyền truy cập đơn hàng này!" });
-    }
-
-    // Trả về chi tiết đơn hàng
-    res.send(order);
-  } catch (error) {
-    console.error("❌ Lỗi khi lấy chi tiết đơn hàng:", error);
-    res.status(500).send({ message: error.message });
-  }
 };
 
 // Cập nhật trạng thái đơn hàng và thanh toán (chỉ nhân viên)
 exports.updateOrderStatus = async (req, res) => {
-  const orderId = req.params.id;
-  const { status, payment_status, payment_method } = req.body; // Thêm thông tin thanh toán
-  const staffId = req.staffId;
+    const orderId = req.params.id;
+    const { status } = req.body; // Nhận trạng thái từ client
+    const staffId = req.staffId;
 
-  if (!status) {
-    return res.status(400).send({ message: "Trạng thái không được để trống!" });
-  }
-
-  const t = await db.sequelize.transaction();
-
-  try {
-    const order = await Order.findByPk(orderId);
-    if (!order) {
-      return res.status(404).send({ message: "Đơn hàng không tồn tại!" });
+    if (!status) {
+        return res.status(400).send({ message: "Trạng thái không được để trống!" });
     }
 
-    // Cập nhật trạng thái đơn hàng
-    await Order.update(
-      { status, staff_id: staffId },
-      { where: { order_id: orderId }, transaction: t }
-    );
+    const t = await db.sequelize.transaction();
 
-    // Thêm lịch sử trạng thái
-    await OrderStatusHistory.create(
-      { order_id: orderId, status, staff_id: staffId },
-      { transaction: t }
-    );
+    try {
+        const order = await Order.findByPk(orderId);
+        if (!order) {
+            return res.status(404).send({ message: "Đơn hàng không tồn tại!" });
+        }
 
-    // Nếu có thông tin thanh toán, cập nhật thanh toán
-    if (payment_status || payment_method) {
-      const paymentUpdateData = {};
-      if (payment_status) paymentUpdateData.status = payment_status;
-      if (payment_method) paymentUpdateData.method = payment_method;
+        // Cập nhật trạng thái đơn hàng
+        await Order.update(
+            { status, staff_id: staffId },
+            { where: { order_id: orderId }, transaction: t }
+        );
 
-      await Payment.update(paymentUpdateData, {
-        where: { order_id: orderId },
-        transaction: t
-      });
+        // Thêm lịch sử trạng thái
+        await OrderStatusHistory.create(
+            { order_id: orderId, status, staff_id: staffId },
+            { transaction: t }
+        );
+
+        // Nếu trạng thái là "Đã giao", cập nhật thanh toán thành "Đã thanh toán"
+        if (status === 'Đã giao') {
+            await Payment.update(
+                { status: "Đã thanh toán", paid_at: new Date() },
+                { where: { order_id: orderId }, transaction: t }
+            );
+        }
+
+        await t.commit();
+
+        // Lấy đơn hàng đã cập nhật
+        const updatedOrder = await Order.findByPk(orderId, {
+            include: [
+                { model: User, attributes: ['name'] },
+                { model: OrderDetail, include: [Product] },
+                Payment
+            ]
+        });
+
+        res.send(updatedOrder);
+    } catch (error) {
+        await t.rollback();
+        console.error("❌ Lỗi khi cập nhật trạng thái đơn hàng:", error);
+        res.status(500).send({ message: error.message });
     }
-
-    // Nếu trạng thái là "Đã giao", cập nhật thanh toán thành "Đã thanh toán"
-    if (status === 'Đã giao') {
-      await Payment.update(
-        { status: "Đã thanh toán", paid_at: new Date() },
-        { where: { order_id: orderId }, transaction: t }
-      );
-    }
-
-    await t.commit();
-
-    // Lấy đơn hàng đã cập nhật
-    const updatedOrder = await Order.findByPk(orderId, {
-      include: [
-        { model: User, attributes: ['name'] },
-        { model: OrderStatusHistory, order: [['changed_at', 'DESC']] },
-        Payment
-      ]
-    });
-
-    res.send(updatedOrder);
-  } catch (error) {
-    await t.rollback();
-    res.status(500).send({ message: error.message });
-  }
 };
 
 // Hủy đơn hàng
 exports.cancelOrder = async (req, res) => {
-  const orderId = req.params.id;
-  const t = await db.sequelize.transaction();
-  
-  try {
-    const order = await Order.findByPk(orderId);
-    
-    if (!order) {
-      return res.status(404).send({ message: "Đơn hàng không tồn tại!" });
-    }
-    
-    // Kiểm tra quyền hủy đơn
-    if (req.userType === 'user' && order.user_id !== req.userId) {
-      return res.status(403).send({ message: "Không có quyền hủy đơn hàng này!" });
-    }
-    
-    // Kiểm tra nếu đơn hàng đã giao hoặc hoàn thành thì không thể hủy
-    if (['Đã giao', 'Đã hoàn thành'].includes(order.status)) {
-      return res.status(400).send({ message: "Không thể hủy đơn hàng đã giao hoặc đã hoàn thành" });
-    }
-    
-    // Cập nhật trạng thái
-    await Order.update(
-      { status: 'Đã hủy' },
-      { where: { order_id: orderId }, transaction: t }
-    );
-    
-    // Thêm lịch sử
-    await OrderStatusHistory.create(
-      { 
-        order_id: orderId, 
-        status: 'Đã hủy', 
-        staff_id: req.staffId || null
-      },
-      { transaction: t }
-    );
-    
-    // Cập nhật thanh toán
-    await Payment.update(
-      { status: "Đã hủy" },
-      { where: { order_id: orderId }, transaction: t }
-    );
-    
-    await t.commit();
-    
-    res.send({ message: "Đơn hàng đã được hủy thành công" });
-  } catch (error) {
-    await t.rollback();
-    res.status(500).send({ message: error.message });
-  }
+    const orderId = req.params.id;
+    const t = await db.sequelize.transaction();
 
+    try {
+        const order = await Order.findByPk(orderId);
 
+        if (!order) {
+            return res.status(404).send({ message: "Đơn hàng không tồn tại!" });
+        }
+
+        // Kiểm tra quyền hủy đơn
+        if (req.userType === 'user' && order.user_id !== req.userId) {
+            return res.status(403).send({ message: "Không có quyền hủy đơn hàng này!" });
+        }
+
+        // Kiểm tra nếu đơn hàng đã giao hoặc hoàn thành thì không thể hủy
+        if (['Đã giao', 'Đã hoàn thành'].includes(order.status)) {
+            return res.status(400).send({ message: "Không thể hủy đơn hàng đã giao hoặc đã hoàn thành" });
+        }
+
+        // Cập nhật trạng thái
+        await Order.update(
+            { status: 'Đã hủy' },
+            { where: { order_id: orderId }, transaction: t }
+        );
+
+        // Thêm lịch sử
+        await OrderStatusHistory.create(
+            { order_id: orderId, status: 'Đã hủy', staff_id: req.staffId || null },
+            { transaction: t }
+        );
+
+        // Cập nhật thanh toán
+        await Payment.update(
+            { status: "Đã hủy" },
+            { where: { order_id: orderId }, transaction: t }
+        );
+
+        await t.commit();
+
+        res.send({ message: "Đơn hàng đã được hủy thành công" });
+    } catch (error) {
+        await t.rollback();
+        console.error("❌ Lỗi khi hủy đơn hàng:", error);
+        res.status(500).send({ message: error.message });
+    }
 };
 
 // Tạo đơn hàng trực tiếp không qua giỏ hàng
 exports.createDirectOrder = async (req, res) => {
-  const userId = req.userId; // Lấy ID người dùng từ token
-  const { product_id, quantity, payment_method } = req.body; // Nhận thông tin từ client
+  const userId = req.userId;
+  const { product_id, quantity, payment_method, promotion_id } = req.body;
 
   const t = await db.sequelize.transaction();
 
@@ -323,16 +356,20 @@ exports.createDirectOrder = async (req, res) => {
 
     // Tính tổng tiền
     const totalPrice = product.price * quantity;
+    console.log("📝 Tổng tiền trước giảm giá:", totalPrice);
 
-    console.log("📝 Tổng tiền:", totalPrice);
+    // Áp dụng mã giảm giá nếu có
+    const finalPrice = await applyPromotion(totalPrice, promotion_id);
+    console.log("📝 Tổng tiền sau giảm giá:", finalPrice);
 
     // Tạo đơn hàng
     console.log("🚀 Tạo đơn hàng...");
     const order = await Order.create(
       {
         user_id: userId,
-        total_price: totalPrice,
+        total_price: finalPrice,
         status: "Chờ xác nhận",
+        promotion_id: promotion_id
       },
       { transaction: t }
     );
@@ -373,7 +410,18 @@ exports.createDirectOrder = async (req, res) => {
 
     // Trả về đơn hàng mới
     const newOrder = await Order.findByPk(order.order_id, {
-      include: [OrderDetail, User, Payment],
+      include: [
+        {
+          model: OrderDetail,
+          include: [Product]
+        },
+        User,
+        Payment,
+        {
+          model: Promotion,
+          attributes: ['title', 'discount_percent', 'description']
+        }
+      ]
     });
 
     res.status(201).send(newOrder);

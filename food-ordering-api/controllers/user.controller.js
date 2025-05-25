@@ -171,7 +171,7 @@ exports.changePassword = (req, res) => {
     }
   };
   
-  // Lấy thông tin giỏ hàng (có phân trang các sản phẩm trong giỏ)
+// Lấy giỏ hàng của người dùng
 exports.getCart = async (req, res) => {
   try {
     // Lấy page và size từ query params
@@ -183,43 +183,58 @@ exports.getCart = async (req, res) => {
     const limit = size;
 
     // Tìm giỏ hàng của người dùng
-    let cart = await Cart.findOne({ 
-      where: { user_id: req.userId },
-      include: [{
-        model: CartItem,
-        include: [{
-          model: Product,
-        }],
-        offset: offset,  // thêm offset
-        limit: limit     // thêm limit
-      }]
+    let cart = await Cart.findOne({
+      where: { user_id: req.userId }
     });
 
+    // Nếu chưa có giỏ hàng, tạo mới
     if (!cart) {
-      // Nếu người dùng chưa có giỏ hàng, tạo mới
       cart = await Cart.create({ user_id: req.userId });
-      cart.items = [];
     }
 
-    // Tính tổng số sản phẩm trong giỏ (nếu cần gửi thêm về client)
+    // Lấy các item trong giỏ hàng có phân trang + include Product
+    const cartItems = await CartItem.findAll({
+      where: { cart_id: cart.cart_id },
+      include: [
+        {
+          model: Product,
+          attributes: ["product_id", "name", "description", "price", "image_url", "category_id", "is_active"]
+        }
+      ],
+      offset,
+      limit
+    });
+
+    // Đếm tổng số item (tính cho tất cả phân trang)
     const totalItems = await CartItem.count({
       where: { cart_id: cart.cart_id }
     });
 
-    res.status(200).send({
-      totalItems: totalItems,
+    // Tính tổng số lượng và tổng giá tiền
+    const totalQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+    const totalPrice = cartItems.reduce((sum, item) => {
+      return sum + item.quantity * parseFloat(item.Product?.price || 0);
+    }, 0);
+
+    // Trả dữ liệu đúng với frontend
+    res.status(200).json({
+      totalItems,
       totalPages: Math.ceil(totalItems / size),
       currentPage: page,
-      cart: cart
+      cart: {
+        cart_id: cart.cart_id,
+        user_id: cart.user_id,
+        cart_items: cartItems,
+        totalQuantity,
+        totalPrice
+      }
     });
   } catch (err) {
-    res.status(500).send({
+    res.status(500).json({
       message: err.message || "Đã xảy ra lỗi khi lấy thông tin giỏ hàng."
     });
   }
 };
-
-  
   // Cập nhật số lượng sản phẩm trong giỏ hàng
   exports.updateCartItem = async (req, res) => {
     try {

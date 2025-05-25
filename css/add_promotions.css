@@ -33,10 +33,16 @@ nav a {
   margin: 0 10px;
   text-decoration: none;
   color: #333;
+  transition: all 0.3s ease;
+}
+
+nav a:hover {
+  color: #ffcb45;
 }
 
 nav a.active {
   font-weight: bold;
+  color: #ffcb45;
 }
 
 .user-actions {
@@ -50,6 +56,12 @@ nav a.active {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.logout-btn:hover {
+  background-color: #ff6600;
+  color: #fff;
 }
 
 .admin-container {
@@ -62,10 +74,10 @@ nav a.active {
   background-color: #333;
   color: #fff;
   padding: 20px;
-  height: 50vh; 
-  position: sticky; 
-  top: 0; 
-  overflow-y: auto; 
+  height: 50vh;
+  position: sticky;
+  top: 0;
+  overflow-y: auto;
 }
 
 .sidebar ul {
@@ -80,15 +92,26 @@ nav a.active {
 .sidebar ul li a {
   color: #fff;
   text-decoration: none;
+  transition: all 0.3s ease;
+  display: block;
+  padding: 8px 12px;
+  border-radius: 5px;
 }
 
 .sidebar ul li a:hover {
-  text-decoration: underline;
+  background-color: #444;
+}
+
+.sidebar ul li a.active {
+  background-color: #ffcb45;
+  color: #333;
 }
 
 .main-content {
   flex: 1;
   padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .promotions-section {
@@ -141,49 +164,73 @@ nav a.active {
 
 .add-promotion-section {
   background-color: #fff;
-  padding: 20px;
+  padding: 30px;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .add-promotion-section h2 {
   font-size: 24px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+  color: #333;
+  font-weight: 600;
+  border-bottom: 2px solid #ffcb45;
+  padding-bottom: 10px;
 }
 
 .add-promotion-section form {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
 }
 
 .add-promotion-section label {
-  margin-bottom: 5px;
-  font-weight: bold;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #555;
 }
 
 .add-promotion-section input,
+.add-promotion-section select,
 .add-promotion-section textarea {
-  margin-bottom: 20px;
-  padding: 10px;
+  padding: 12px;
   border: 1px solid #ddd;
   border-radius: 5px;
+  font-size: 14px;
+  transition: all 0.3s ease;
   width: 100%;
 }
 
 .add-promotion-section textarea {
+  grid-column: 1 / -1;
   resize: vertical;
+  min-height: 150px;
+}
+
+.add-promotion-section input:focus,
+.add-promotion-section select:focus,
+.add-promotion-section textarea:focus {
+  outline: none;
+  border-color: #ffcb45;
+  box-shadow: 0 0 0 2px rgba(255, 203, 69, 0.2);
 }
 
 .submit-btn {
+  grid-column: 1 / -1;
   padding: 12px 24px;
   background-color: #ffcb45;
   border: none;
-  border-radius: 50px;
+  border-radius: 5px;
   font-size: 14px;
-  font-weight: 700;
-  color: #1d1d1d;
+  font-weight: 600;
+  color: #333;
   cursor: pointer;
-  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #ff6600;
+  color: #fff;
 }
 
 footer {
@@ -191,4 +238,67 @@ footer {
   padding: 20px;
   width: 100%;
   text-align: center;
+  margin-top: auto;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+
+  .admin-container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: static;
+    margin-bottom: 20px;
+  }
+
+  .sidebar ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .sidebar ul li {
+    margin: 0;
+  }
+
+  .add-promotion-section form {
+    grid-template-columns: 1fr;
+  }
+
+  .add-promotion-section {
+    padding: 20px;
+  }
+
+  .submit-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .add-promotion-section h2 {
+    font-size: 20px;
+  }
+
+  .add-promotion-section {
+    padding: 15px;
+  }
+
+  .add-promotion-section label {
+    font-size: 14px;
+  }
+
+  .add-promotion-section input,
+  .add-promotion-section select,
+  .add-promotion-section textarea {
+    padding: 10px;
+  }
 }

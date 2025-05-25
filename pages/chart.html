@@ -3,14 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chart - KhoaFood</title>
+    <title>Giỏ hàng - KhoaFood</title>
     <link rel="stylesheet" href="/css/chart.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <header>
-        <div class="logo">KhoaFood</div>
+        <div class="logo">
+            <img src="/images/logo.png" alt="KhoaFood Logo">
+            <span>KhoaFood</span>
+        </div>
         <nav>
-            <a href="home.html" class="active">Trang chủ</a>
+            <a href="home.html">Trang chủ</a>
             <a href="menu.html">Menu</a>
             <a href="how_it_works.html">Cách hoạt động</a>
             <a href="about_us.html">Về chúng tôi</a>
@@ -18,98 +22,179 @@
             <a href="admin_dashboard.html">Admin</a>
         </nav>
         <div class="user-actions">
-            <a href="chart.html">
-                <button class="cart">Giỏ hàng</button>
+            <a href="chart.html" class="cart-btn active">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">0</span>
             </a>
-           `<a href="login_register.html">
-               <button class="login-btn">Đăng nhập/ Đăng ký</button>
-            </a>    
+            <a href="login_register.html" class="login-btn" id="auth-btn">
+                <i class="fas fa-user"></i>
+                <span id="auth-text">Đăng nhập</span>
+            </a>
         </div>
     </header>
 
-
     <main>
-        
-        
-
         <section class="chart-section">
-            <div class="chart-container">
-                <div class="chart-item">
-                    <div class="chart-item-image">
-                        <img src="/images/banh.jpg" alt="Bánh">
-                        <div class="chart-item-quantity">1</div>
+            <h1>Giỏ hàng của bạn</h1>
+            <div id="cart-container">
+                <!-- Giỏ hàng sẽ được tải từ backend -->
+                <div class="loading">Đang tải giỏ hàng...</div>
+            </div>
+            
+            <!-- Phân trang -->
+            <div id="cart-pagination" class="pagination" style="display: none;">
+                <button id="prev-page" class="pagination-btn">
+                    <i class="fas fa-chevron-left"></i> Trước
+                </button>
+                <span id="page-info">Trang 1 / 1</span>
+                <button id="next-page" class="pagination-btn">
+                    Sau <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+
+            <div id="cart-summary" style="display: none;">
+                <div class="summary-content">
+                    <div class="summary-row">
+                        <span>Tổng số lượng:</span>
+                        <span id="total-quantity">0 món</span>
                     </div>
-                    <div class="chart-item-details">
-                        <div class="chart-item-name">Bánh</div>
-                        <div class="chart-item-price">20.000 VND</div>
+                    <div class="summary-row">
+                        <span>Tổng tiền:</span>
+                        <span id="total-price">0 VND</span>
                     </div>
+                    <div class="promotion-section">
+                        <h3>Mã giảm giá</h3>
+                        <div class="promotion-select">
+                            <select id="promotion-select">
+                                <option value="">Chọn mã giảm giá</option>
+                            </select>
+                            <button id="view-promotion-details" class="view-details-btn" disabled>
+                                <i class="fas fa-info-circle"></i> Chi tiết
+                            </button>
+                        </div>
+                        <div id="applied-promotion" class="applied-promotion" style="display: none;">
+                            <div class="discount-info">
+                                <span>Giảm giá: <span id="discount-amount">0</span>%</span>
+                                <span>Tiết kiệm: <span id="saved-amount">0</span> VND</span>
+                            </div>
+                            <div class="final-price">
+                                <span>Tổng thanh toán:</span>
+                                <span id="final-price">0 VND</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="payment-methods">
+                        <h3>Phương thức thanh toán</h3>
+                        <div class="payment-options">
+                            <div class="payment-option">
+                                <label for="cod">
+                                    <div class="payment-info">
+                                        <i class="fas fa-money-bill-wave"></i>
+                                        <span>Thanh toán khi nhận hàng (COD)</span>
+                                    </div>
+                                    <input type="radio" id="cod" name="payment-method" value="COD" checked>
+                                </label>
+                            </div>
+                            <div class="payment-option">
+                                <label for="banking">
+                                    <div class="payment-info">
+                                        <i class="fas fa-university"></i>
+                                        <span>Chuyển khoản ngân hàng</span>
+                                    </div>
+                                    <input type="radio" id="banking" name="payment-method" value="BANKING">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="checkout-btn" class="checkout-btn">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span>Đặt hàng - <span id="checkout-price">0 VND</span></span>
+                    </button>
                 </div>
-                <div class="chart-item">
-                    <div class="chart-item-image">
-                        <img src="/images/cocacola.jpg" alt="Coca-Cola">
-                        <div class="chart-item-quantity">1</div>
-                    </div>
-                    <div class="chart-item-details">
-                        <div class="chart-item-name">Coca-Cola</div>
-                        <div class="chart-item-price">20.000 VND</div>
-                    </div>
-                </div>
-                <div class="chart-item">
-                    <div class="chart-item-image">
-                        <img src="/images/milk.jpg" alt="Sữa tươi">
-                        <div class="chart-item-quantity">1</div>
-                    </div>
-                    <div class="chart-item-details">
-                        <div class="chart-item-name">Sữa tươi</div>
-                        <div class="chart-item-price">20.000 VND</div>
-                    </div>
-                </div>
-                <div class="chart-summary">
-                    <div class="summary-item">
-                        <div class="summary-label">Số lượng:</div>
-                        <div class="summary-value">3</div>
-                    </div>
-                    
-                    <div class="summary-item total">
-                        <div class="summary-label">Tổng:</div>
-                        <div class="summary-value">60.000 VND</div>
-                    </div>
-                </div>
-                <button class="cta-btn">Thanh toán ngay</button>
             </div>
         </section>
     </main>
 
     <footer>
         <div class="footer-content">
-            <div>
-                <h4>Company</h4>
-                <a href="#">About Us</a>
-                <a href="#">How It Work</a>
-                <a href="#">Career</a>
+            <div class="footer-section">
+                <h4>Công ty</h4>
+                <a href="about_us.html">Về chúng tôi</a>
+                <a href="how_it_works.html">Cách hoạt động</a>
+                <a href="careers.html">Tuyển dụng</a>
             </div>
-            <div>
-                <h4>Policy</h4>
-                <a href="#">FAQ</a>
-                <a href="#">Privacy</a>
-                <a href="#">Shipping</a>
+            <div class="footer-section">
+                <h4>Chính sách</h4>
+                <a href="faq.html">FAQ</a>
+                <a href="privacy.html">Bảo mật</a>
+                <a href="shipping.html">Vận chuyển</a>
             </div>
-            <div>
-                <h4>Get In Touch</h4>
-                <p>+62 896 7311 2766</p>
-                <p>food@example.com</p>
+            <div class="footer-section">
+                <h4>Liên hệ</h4>
+                <p><i class="fas fa-phone"></i> +62 896 7311 2766</p>
+                <p><i class="fas fa-envelope"></i> food@example.com</p>
             </div>
-            <div>
-                <div class="logo">KhoaFood</div>
-                <p>Hà Đông, Hà Nội</p>
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <img src="/images/logo.png" alt="KhoaFood Logo">
+                    <span>KhoaFood</span>
+                </div>
+                <p><i class="fas fa-map-marker-alt"></i> Hà Đông, Hà Nội</p>
                 <div class="social-icons">
-                    <a href="#">Facebook</a>
-                    <a href="#">Instagram</a>
-                    <a href="#">Twitter</a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
                 </div>
             </div>
         </div>
-        <p class="copyright">© 2025 KhoaFood. ALL RIGHT RESERVED.</p>
+        <div class="copyright">
+            <p>© 2025 KhoaFood. ALL RIGHT RESERVED.</p>
+        </div>
     </footer>
+
+    <!-- Loading spinner -->
+    <div id="loading" class="loading" style="display: none;">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Toast message -->
+    <div id="message-toast" class="message-toast" style="display: none;">
+        <span id="toast-message"></span>
+    </div>
+
+    <!-- Modal xem chi tiết mã giảm giá -->
+    <div id="promotion-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Chi tiết mã giảm giá</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="promotion-details">
+                    <div class="detail-row">
+                        <span class="label">Mã:</span>
+                        <span id="modal-code" class="value"></span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Giảm giá:</span>
+                        <span id="modal-discount" class="value"></span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Mô tả:</span>
+                        <p id="modal-description" class="value"></p>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Thời gian:</span>
+                        <div id="modal-validity" class="value">
+                            <div>Bắt đầu: <span id="modal-start-date"></span></div>
+                            <div>Kết thúc: <span id="modal-end-date"></span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/chart.js"></script>
 </body>
 </html>

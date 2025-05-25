@@ -483,3 +483,25 @@ exports.searchStaffByName = async (req, res) => {
     });
   }
 };
+
+// Lấy thông tin nhân viên qua ID
+exports.getStaffById = (req, res) => {
+  const id = req.params.id;
+
+  Staff.findByPk(id, {
+    attributes: { exclude: ['password'] } // Loại bỏ trường mật khẩu
+  })
+    .then(staff => {
+      if (!staff) {
+        return res.status(404).send({
+          message: `Không tìm thấy nhân viên với ID: ${id}.`
+        });
+      }
+      res.status(200).send(staff);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: err.message || "Đã xảy ra lỗi khi lấy thông tin nhân viên."
+      });
+    });
+};

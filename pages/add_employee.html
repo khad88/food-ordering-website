@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thêm Nhân Viên - KhoaFood</title>
+    <title>Thêm/Sửa Nhân Viên - KhoaFood</title>
     <link rel="stylesheet" href="/css/add_employee.css">
 </head>
 <body>
@@ -14,7 +14,7 @@
             <a href="employee.html" class="active">Quản lý nhân viên</a>
         </nav>
         <div class="user-actions">
-            <button class="logout-btn">Đăng xuất</button>
+            <button class="logout-btn" onclick="logout()">Đăng xuất</button>
         </div>
     </header>
 
@@ -24,33 +24,36 @@
                 <li><a href="admin_dashboard.html">Tổng Quan</a></li>
                 <li><a href="orders.html">Đơn Hàng</a></li>
                 <li><a href="product_management.html">Sản Phẩm</a></li>
-                <li><a href="customers.html">Khách Hàng</a></li>
                 <li><a href="promotions.html">Khuyến Mãi</a></li>
-                <li><a href="reviews.html">Đánh Giá & Phản Hồi</a></li>
                 <li><a href="employee.html" class="active">Nhân viên</a></li>
             </ul>
         </aside>
 
         <main class="main-content">
             <section id="add-employee" class="add-employee-section">
-                <h2>Thêm Nhân Viên</h2>
-                <form>
+                <h2 id="form-title">Thêm Nhân Viên</h2>
+                <form id="employee-form">
+                    <input type="hidden" id="employee-id" name="employee-id">
+
                     <label for="employee-name">Tên nhân viên:</label>
                     <input type="text" id="employee-name" name="employee-name" required>
 
                     <label for="employee-email">Email:</label>
                     <input type="email" id="employee-email" name="employee-email" required>
 
+                    <label for="employee-password">Mật khẩu:</label>
+                    <input type="password" id="employee-password" name="employee-password">
+
                     <label for="employee-phone">Số điện thoại:</label>
-                    <input type="text" id="employee-phone" name="employee-phone" required>
+                    <input type="text" id="employee-phone" name="employee-phone">
 
                     <label for="employee-role">Vai trò:</label>
                     <select id="employee-role" name="employee-role" required>
-                        <option value="admin">Admin</option>
                         <option value="employee">Nhân viên</option>
+                        <option value="manager">Quản lý</option>
                     </select>
 
-                    <button type="submit" class="submit-btn">Thêm Nhân Viên</button>
+                    <button type="submit" class="submit-btn">Lưu</button>
                 </form>
             </section>
         </main>
@@ -59,5 +62,7 @@
     <footer>
         <p>© 2025 KhoaFood. ALL RIGHT RESERVED.</p>
     </footer>
+
+    <script src="/js/add_employee.js"></script>
 </body>
 </html>

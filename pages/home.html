@@ -5,10 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KhoaFood Home</title>
     <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <header>
-        <div class="logo">KhoaFood</div>
+        <div class="logo">
+            <img src="/images/logo.png" alt="KhoaFood Logo">
+            <span>KhoaFood</span>
+        </div>
         <nav>
             <a href="home.html" class="active">Trang chủ</a>
             <a href="menu.html">Menu</a>
@@ -18,12 +22,14 @@
             <a href="admin_dashboard.html">Admin</a>
         </nav>
         <div class="user-actions">
-            <a href="chart.html">
-                <button class="cart">Giỏ hàng</button>
+            <a href="chart.html" class="cart-btn">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">0</span>
             </a>
-           `<a href="login_register.html">
-               <button class="login-btn">Đăng nhập/ Đăng ký</button>
-            </a>    
+            <a href="login_register.html" class="login-btn">
+                <i class="fas fa-user"></i>
+                <span>Đăng nhập</span>
+            </a>
         </div>
     </header>
 
@@ -32,10 +38,10 @@
             <div class="hero-text">
                 <h1>Giao đồ ăn nhanh nhất đến tay bạn!</h1>
                 <p>Tươi ngon từng bữa, trọn vẹn từng giây!</p>
-                <button class="cta-btn">Bắt đầu</button>
+                <a href="login_register.html" class="cta-btn primary-btn">Bắt đầu</a>
             </div>
             <div class="hero-image">
-                <img src="/images/img-hero.png" alt="Hero Image">
+                <img src="/images/about_us.png" alt="Food Delivery Illustration">
             </div>
         </section>
 
@@ -67,30 +73,38 @@
             <div class="menu-grid">
                 <div class="menu-item">
                     <img src="/images/ramen.png" alt="Mie Ramen">
-                    <h3>Mie Ramen</h3>
-                    <p>lorem ipsum</p>
-                    <p class="price">$ 20.2</p>
+                    <div class="menu-item-content">
+                        <h3>Mie Ramen</h3>
+                        <p>lorem ipsum</p>
+                        <p class="price">$ 20.2</p>
+                    </div>
                 </div>
                 <div class="menu-item">
                     <img src="/images/vegetable.png" alt="Salad Tahu">
-                    <h3>Salad Tahu</h3>
-                    <p>lorem ipsum</p>
-                    <p class="price">$ 20.2</p>
+                    <div class="menu-item-content">
+                        <h3>Salad Tahu</h3>
+                        <p>lorem ipsum</p>
+                        <p class="price">$ 20.2</p>
+                    </div>
                 </div>
                 <div class="menu-item">
                     <img src="/images/ramen.png" alt="Roti Bakar">
-                    <h3>Roti Bakar</h3>
-                    <p>lorem ipsum</p>
-                    <p class="price">$ 20.2</p>
+                    <div class="menu-item-content">
+                        <h3>Roti Bakar</h3>
+                        <p>lorem ipsum</p>
+                        <p class="price">$ 20.2</p>
+                    </div>
                 </div>
                 <div class="menu-item">
                     <img src="/images/vegetable.png" alt="Spaghetti">
-                    <h3>Spaghetti</h3>
-                    <p>lorem ipsum</p>
-                    <p class="price">$ 20.2</p>
+                    <div class="menu-item-content">
+                        <h3>Spaghetti</h3>
+                        <p>lorem ipsum</p>
+                        <p class="price">$ 20.2</p>
+                    </div>
                 </div>
             </div>
-            <button class="cta-btn">Thêm</button>
+            <a href="menu.html" class="cta-btn secondary-btn">Xem thêm</a>
         </section>
 
         <section class="testimonials">
@@ -98,12 +112,12 @@
             <div class="testimonial-grid">
                 <div class="testimonial-item">
                     <img src="/images/customer_1.png" alt="Nguyễn Thị A">
-                    <p>“Ôi đồ ăn ở đây ngon quá!!!”</p>
+                    <p>"Ôi đồ ăn ở đây ngon quá!!!"</p>
                     <h4>Nguyễn Thị A</h4>
                 </div>
                 <div class="testimonial-item">
                     <img src="/images/customer_2.png" alt="Nam">
-                    <p>“Đồ ăn ngon mà giá cả lại phải chăng”</p>
+                    <p>"Đồ ăn ngon mà giá cả lại phải chăng"</p>
                     <h4>Nam</h4>
                 </div>
             </div>
@@ -111,40 +125,47 @@
 
         <section class="cta-section">
             <h2>Đăng ký ngay để nhận ưu đãi lên đến 50%</h2>
-            <button class="cta-btn">Đăng nhập</button>
+            <a href="login_register.html" class="cta-btn secondary-btn">Đăng nhập</a>
+       
         </section>
     </main>
 
     <footer>
         <div class="footer-content">
-            <div>
-                <h4>Company</h4>
-                <a href="#">About Us</a>
-                <a href="#">How It Work</a>
-                <a href="#">Career</a>
+            <div class="footer-section">
+                <h4>Công ty</h4>
+                <a href="about_us.html">Về chúng tôi</a>
+                <a href="how_it_works.html">Cách hoạt động</a>
+                <a href="careers.html">Tuyển dụng</a>
             </div>
-            <div>
-                <h4>Policy</h4>
-                <a href="#">FAQ</a>
-                <a href="#">Privacy</a>
-                <a href="#">Shipping</a>
+            <div class="footer-section">
+                <h4>Chính sách</h4>
+                <a href="faq.html">FAQ</a>
+                <a href="privacy.html">Bảo mật</a>
+                <a href="shipping.html">Vận chuyển</a>
             </div>
-            <div>
-                <h4>Get In Touch</h4>
-                <p>+62 896 7311 2766</p>
-                <p>food@example.com</p>
+            <div class="footer-section">
+                <h4>Liên hệ</h4>
+                <p><i class="fas fa-phone"></i> +62 896 7311 2766</p>
+                <p><i class="fas fa-envelope"></i> food@example.com</p>
             </div>
-            <div>
-                <div class="logo">KhoaFood</div>
-                <p>Hà Đông, Hà Nội</p>
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <img src="/images/logo.png" alt="KhoaFood Logo">
+                    <span>KhoaFood</span>
+                </div>
+                <p><i class="fas fa-map-marker-alt"></i> Hà Đông, Hà Nội</p>
                 <div class="social-icons">
-                    <a href="#">Facebook</a>
-                    <a href="#">Instagram</a>
-                    <a href="#">Twitter</a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
                 </div>
             </div>
         </div>
-        <p class="copyright">© 2025 KhoaFood. ALL RIGHT RESERVED.</p>
+        <div class="copyright">
+            <p>© 2025 KhoaFood. ALL RIGHT RESERVED.</p>
+        </div>
     </footer>
+    <script src="/js/home.js"></script>
 </body>
-</html>
+</html></html>

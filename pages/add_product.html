@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thêm Sản phẩm - KhoaFood</title>
     <link rel="stylesheet" href="/css/add_product.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <header>
@@ -14,7 +15,10 @@
             <a href="product_management.html" class="active">Quản lý sản phẩm</a>
         </nav>
         <div class="user-actions">
-            <button class="logout-btn">Đăng xuất</button>
+            <button class="logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                Đăng xuất
+            </button>
         </div>
     </header>
 
@@ -23,44 +27,82 @@
             <ul>
                 <li><a href="admin_dashboard.html">Tổng Quan</a></li>
                 <li><a href="orders.html">Đơn Hàng</a></li>
-                <li><a href="product_management.html">Sản Phẩm</a></li>
-                <li><a href="customers.html">Khách Hàng</a></li>
+                <li><a href="product_management.html" class="active">Sản Phẩm</a></li>
                 <li><a href="promotions.html">Khuyến Mãi</a></li>
-                <li><a href="reviews.html">Đánh Giá & Phản Hồi</a></li>
                 <li><a href="employee.html">Nhân viên</a></li>
             </ul>
         </aside>
 
         <main class="main-content">
             <section id="add-product" class="add-product-section">
-                <h2>Thêm Sản phẩm</h2>
-                <form>
-                    <label for="product-name">Tên sản phẩm:</label>
-                    <input type="text" id="product-name" name="product-name" required>
+                <h2 id="form-title">
+                    <i class="fas fa-plus-circle"></i>
+                    Thêm Sản phẩm
+                </h2>
+                <form id="add-product-form">
+                    <div class="form-group">
+                        <label for="product-name">
+                            <i class="fas fa-tag"></i>
+                            Tên sản phẩm:
+                        </label>
+                        <input type="text" id="product-name" name="name" required>
+                    </div>
 
-                    <label for="category">Danh mục:</label>
-                    <select id="category" name="category" required>
-                        <option value="an-nhe">Ăn nhẹ</option>
-                        <option value="mon-chinh">Món chính</option>
-                        <option value="do-uong">Đồ uống</option>
-                        <option value="trang-mieng">Tráng miệng</option>
-                    </select>
+                    <div class="form-group">
+                        <label for="category">
+                            <i class="fas fa-folder"></i>
+                            Danh mục:
+                        </label>
+                        <select id="category" name="category_id" required>
+                            <!-- Danh mục sẽ được tải từ backend -->
+                        </select>
+                    </div>
 
-                    <label for="price">Giá:</label>
-                    <input type="text" id="price" name="price" required>
+                    <div class="form-group">
+                        <label for="price">
+                            <i class="fas fa-dollar-sign"></i>
+                            Giá:
+                        </label>
+                        <input type="number" id="price" name="price" required>
+                    </div>
 
-                    <label for="quantity">Số lượng:</label>
-                    <input type="number" id="quantity" name="quantity" required>
+                    <div class="form-group">
+                        <label for="is-active">
+                            <i class="fas fa-toggle-on"></i>
+                            Trạng thái:
+                        </label>
+                        <select id="is-active" name="is_active" required>
+                            <option value="true">Kích hoạt</option>
+                            <option value="false">Ẩn</option>
+                        </select>
+                    </div>
 
-                    <label for="image">Hình ảnh:</label>
-                    <input type="file" id="image" name="image" required>
+                    <div class="form-group">
+                        <label for="image-url">
+                            <i class="fas fa-image"></i>
+                            URL Hình ảnh:
+                        </label>
+                        <input type="url" id="image-url" name="image_url">
+                    </div>
 
-                    <label for="description">Mô tả:</label>
-                    <textarea id="description" name="description" required></textarea>
+                    <div class="form-group full-width">
+                        <label for="description">
+                            <i class="fas fa-align-left"></i>
+                            Mô tả:
+                        </label>
+                        <textarea id="description" name="description" required></textarea>
+                    </div>
 
-                    <a href="product_management.html">
-                        <button type="submit" class="submit-btn">Thêm Sản phẩm</button>
-                    </a>
+                    <div class="buttons-group">
+                        <a href="product_management.html" class="btn cancel-btn">
+                            <i class="fas fa-times"></i>
+                            Hủy
+                        </a>
+                        <button type="submit" class="btn save-btn">
+                            <i class="fas fa-save"></i>
+                            Lưu sản phẩm
+                        </button>
+                    </div>
                 </form>
             </section>
         </main>
@@ -69,5 +111,7 @@
     <footer>
         <p>© 2025 KhoaFood. ALL RIGHT RESERVED.</p>
     </footer>
+
+    <script src="/js/add_product.js"></script>
 </body>
 </html>

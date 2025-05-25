@@ -12,6 +12,10 @@ module.exports = (sequelize, Sequelize) => {
       staff_id: {
         type: Sequelize.INTEGER
       },
+      promotion_id: {
+        type: Sequelize.INTEGER,
+        allowNull: true
+      },
       total_price: {
         type: Sequelize.DECIMAL(10, 2)
       },

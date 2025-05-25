@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản lý đơn hàng - KhoaFood</title>
     <link rel="stylesheet" href="/css/orders.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
     <header>
@@ -14,7 +15,7 @@
             <a href="orders.html" class="active">Quản lý đơn hàng</a>
         </nav>
         <div class="user-actions">
-            <button class="logout-btn">Đăng xuất</button>
+            <button class="logout-btn" onclick="logout()">Đăng xuất</button>
         </div>
     </header>
 
@@ -22,70 +23,133 @@
         <aside class="sidebar">
             <ul>
                 <li><a href="admin_dashboard.html">Tổng Quan</a></li>
-                <li><a href="orders.html">Đơn Hàng</a></li>
+                <li><a href="orders.html" class="active">Đơn Hàng</a></li>
                 <li><a href="product_management.html">Sản Phẩm</a></li>
-                <li><a href="customers.html">Khách Hàng</a></li>
                 <li><a href="promotions.html">Khuyến Mãi</a></li>
-                <li><a href="reviews.html">Đánh Giá & Phản Hồi</a></li>
                 <li><a href="employee.html">Nhân viên</a></li>
             </ul>
         </aside>
 
         <main class="main-content">
             <section id="orders" class="orders-section">
-                <h2>Danh sách đơn hàng</h2>
-                <table class="orders-table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Khách hàng</th>
-                            <th>Sản phẩm</th>
-                            <th>Số lượng</th>
-                            <th>Tổng tiền</th>
-                            <th>Trạng thái</th>
-                            <th>Hành động</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Nguyễn Văn A</td>
-                            <td>Pizza</td>
-                            <td>2</td>
-                            <td>400,000 VND</td>
-                            <td>Chờ xác nhận</td>
-                            <td>
-                                <button class="edit-btn">Xác nhận</button>
-                                <button class="delete-btn">Hủy</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Trần Thị Bình</td>
-                            <td>Cua hoàng đế</td>
-                            <td>3</td>
-                            <td>1,500,000 VND</td>
-                            <td>Đang giao</td>
-                            <td>
-                                <button class="edit-btn">Xác nhận</button>
-                                <button class="delete-btn">Hủy</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Nguyễn Nhật Thành</td>
-                            <td>Ramen</td>
-                            <td>2</td>
-                            <td>400,000 VND</td>
-                            <td>Đã giao</td>
-                            <td>
-                                <button class="edit-btn">Xác nhận</button>
-                                <button class="delete-btn">Hủy</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="orders-header">
+                    <h2>Danh sách đơn hàng</h2>
+                    <div class="status-filter">
+                        <div class="filter-buttons">
+                            <button class="filter-btn active" data-status="all">Tất cả</button>
+                            <button class="filter-btn" data-status="Chờ xác nhận">Chờ xác nhận</button>
+                            <button class="filter-btn" data-status="Đang giao">Đang giao</button>
+                            <button class="filter-btn" data-status="Đã giao">Đã giao</button>
+                            <button class="filter-btn" data-status="Đã hủy">Đã hủy</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="table-container">
+                    <table class="orders-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Khách hàng</th>
+                                <th>Sản phẩm</th>
+                                <th>Số lượng</th>
+                                <th>Tổng tiền</th>
+                                <th>Trạng thái</th>
+                                <th>Thời gian</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orders-tbody">
+                            <!-- Danh sách đơn hàng sẽ được tải từ backend -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Phân trang -->
+                <div class="pagination" id="pagination-container">
+                    <!-- Các nút phân trang sẽ được thêm động -->
+                </div>
             </section>
+
+            <!-- Modal xem chi tiết đơn hàng -->
+            <div id="order-details-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close-btn" onclick="closeOrderDetailsModal()">&times;</span>
+                    <div class="modal-header">
+                        <h2>Chi tiết đơn hàng #<span id="modal-order-id"></span></h2>
+                    </div>
+                    <div class="order-info">
+                        <div class="order-info-section">
+                            <h3>Thông tin khách hàng</h3>
+                            <div class="info-item">
+                                <span class="info-label">Tên:</span>
+                                <span class="info-value" id="customer-name"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Email:</span>
+                                <span class="info-value" id="customer-email"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Số điện thoại:</span>
+                                <span class="info-value" id="customer-phone"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Địa chỉ:</span>
+                                <span class="info-value" id="customer-address"></span>
+                            </div>
+                        </div>
+                        <div class="order-info-section">
+                            <h3>Thông tin đơn hàng</h3>
+                            <div class="info-item">
+                                <span class="info-label">Trạng thái:</span>
+                                <span class="info-value" id="order-status"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Thời gian đặt:</span>
+                                <span class="info-value" id="order-time"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Phương thức thanh toán:</span>
+                                <span class="info-value" id="payment-method"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Trạng thái thanh toán:</span>
+                                <span class="info-value" id="payment-status"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="products-list">
+                        <h3>Danh sách sản phẩm</h3>
+                        <table class="products-table">
+                            <thead>
+                                <tr>
+                                    <th>Sản phẩm</th>
+                                    <th>Đơn giá</th>
+                                    <th>Số lượng</th>
+                                    <th>Thành tiền</th>
+                                </tr>
+                            </thead>
+                            <tbody id="products-list">
+                                <!-- Danh sách sản phẩm sẽ được thêm động -->
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="3" style="text-align: right;"><strong>Tổng cộng:</strong></td>
+                                    <td id="total-price"></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <div class="modal-navigation">
+                        <button class="nav-button" id="prev-order">
+                            <i class="fas fa-chevron-left"></i> Đơn hàng trước
+                        </button>
+                        <button class="nav-button" id="next-order">
+                            Đơn hàng sau <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
 
@@ -93,16 +157,6 @@
         <p>© 2025 KhoaFood. ALL RIGHT RESERVED.</p>
     </footer>
 
-    <script>
-        document.querySelectorAll('.edit-btn').forEach(button => {
-            button.addEventListener('click', () => {
-            });
-        });
-
-        document.querySelectorAll('.delete-btn').forEach(button => {
-            button.addEventListener('click', () => {
-            });
-        });
-    </script>
+    <script src="/js/orders.js"></script>
 </body>
 </html>

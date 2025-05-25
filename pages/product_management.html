@@ -11,7 +11,7 @@
         <div class="logo">KhoaFood Admin</div>
         <nav>
             <a href="home.html">Trang chủ</a>
-            <a href="products.html" class="active">Quản lý sản phẩm</a>
+            <a href="product_management.html" class="active">Quản lý sản phẩm</a>
         </nav>
         <div class="user-actions">
             <button class="logout-btn">Đăng xuất</button>
@@ -23,20 +23,22 @@
             <ul>
                 <li><a href="admin_dashboard.html">Tổng Quan</a></li>
                 <li><a href="orders.html">Đơn Hàng</a></li>
-                <li><a href="product_management.html">Sản Phẩm</a></li>
-                <li><a href="customers.html">Khách Hàng</a></li>
+                <li><a href="product_management.html" class="active">Sản Phẩm</a></li>
                 <li><a href="promotions.html">Khuyến Mãi</a></li>
-                <li><a href="reviews.html" class="active">Đánh Giá & Phản Hồi</a></li>
-                <li><a href="employee.html">Nhân viên</a></li>
+                <li><a href="employee.html" >Nhân viên</a></li>
             </ul>
         </aside>
 
         <main class="main-content">
             <section class="product-management">
                 <h1>Quản lý sản phẩm</h1>
-                <a href="add_product.html">
-                    <button class="add-btn">Thêm sản phẩm</button> 
-                </a>
+                <div class="actions">
+                    <input type="text" id="search-input" placeholder="Tìm kiếm sản phẩm...">
+                    <button class="btn search-btn" onclick="searchProducts()">Tìm kiếm</button>
+                    <a href="add_product.html">
+                        <button class="btn add-btn">Thêm sản phẩm</button>
+                    </a>
+                </div>
                 <table class="products-table">
                     <thead>
                         <tr>
@@ -44,47 +46,17 @@
                             <th>Tên sản phẩm</th>
                             <th>Danh mục</th>
                             <th>Giá</th>
-                            <th>Số lượng</th>
+                            <th>Trạng thái</th>
                             <th>Hình ảnh</th>
                             <th>Mô tả</th>
                             <th>Hành động</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Trứng ốp la</td>
-                            <td>Ăn nhẹ</td>
-                            <td>200,000 VND</td>
-                            <td>50</td>
-                            <td><img src="/images/trung_op_la.png" alt="Pizza"></td>
-                            <td>Pizza ngon</td>
-                            <td>
-                                <a href="add_product.html">
-                                    <button class="edit-btn">Sửa</button>
-                                </a>
-                                <button class="delete-btn">Xóa</button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>1</td>
-                            <td>Pizza</td>
-                            <td>Món chính</td>
-                            <td>200,000 VND</td>
-                            <td>50</td>
-                            <td><img src="/images/pizza.png" alt="Pizza"></td>
-                            <td>Pizza ngon</td>
-                            <td>
-                                <a href="add_product.html">
-                                    <button class="edit-btn">Sửa</button>
-                                </a>
-                                <button class="delete-btn">Xóa</button>
-                            </td>
-                        </tr>
-                        
+                    <tbody id="products-tbody">
+                        <!-- Danh sách sản phẩm sẽ được tải từ backend -->
                     </tbody>
                 </table>
+                <div class="pagination" id="pagination-container"></div>
             </section>
         </main>
     </div>
@@ -93,19 +65,6 @@
         <p>© 2025 KhoaFood. ALL RIGHT RESERVED.</p>
     </footer>
 
-    <script>
-        document.querySelector('.add-btn').addEventListener('click', () => {
-        });
-
-        document.querySelectorAll('.edit-btn').forEach(button => {
-            button.addEventListener('click', () => {
-            });
-        });
-
-        document.querySelectorAll('.delete-btn').forEach(button => {
-            button.addEventListener('click', () => {
-            });
-        });
-    </script>
+    <script src="/js/product_management.js"></script>
 </body>
 </html>

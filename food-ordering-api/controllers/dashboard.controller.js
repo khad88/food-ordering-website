@@ -16,7 +16,7 @@ exports.getSummary = async (req, res) => {
     // Lấy tổng doanh thu
     const totalRevenue = await Order.sum('total_price', {
       where: {
-        status: 'Đã hoàn thành'
+        status: 'Đã giao'
       }
     });
     
@@ -41,7 +41,7 @@ exports.getSummary = async (req, res) => {
     // Lấy doanh thu trong ngày hôm nay
     const revenueToday = await Order.sum('total_price', {
       where: {
-        status: 'Đã hoàn thành',
+        status: 'Đã giao',
         order_time: {
           [Op.gte]: today
         }
@@ -73,7 +73,7 @@ exports.getDailyRevenue = async (req, res) => {
     
     const result = await Order.findAll({
       where: {
-        status: 'Đã hoàn thành',
+        status: 'Đã giao',
         order_time: {
           [Op.between]: [startDate, endDate]
         }
@@ -118,7 +118,7 @@ exports.getMonthlyRevenue = async (req, res) => {
     
     const result = await Order.findAll({
       where: {
-        status: 'Đã hoàn thành',
+        status: 'Đã giao',
         order_time: {
           [Op.between]: [startDate, endDate]
         }
@@ -196,35 +196,80 @@ exports.getTopProducts = async (req, res) => {
 // Lấy thống kê theo danh mục
 exports.getCategoryPerformance = async (req, res) => {
   try {
-    const result = await OrderDetail.findAll({
+    // 1. Lấy tất cả danh mục
+    const categories = await Category.findAll({
+      attributes: ['category_id', 'category_name']
+    });
+
+    // 2. Lấy thống kê sản phẩm theo danh mục
+    const productStats = await Product.findAll({
       attributes: [
-        [sequelize.fn('SUM', sequelize.col('quantity')), 'total_quantity'],
-        [sequelize.fn('SUM', sequelize.literal('quantity * unit_price')), 'total_revenue'],
-        'product_id',  // Thêm product_id vào đây
-        'product.category_id'  // Thêm category_id vào đây
+        'category_id',
+        [sequelize.fn('COUNT', sequelize.col('product_id')), 'total_products']
+      ],
+      group: ['category_id']
+    });
+
+    // 3. Lấy thống kê đơn hàng và doanh thu
+    const orderStats = await OrderDetail.findAll({
+      attributes: [
+        'product.category_id',
+        [sequelize.fn('SUM', sequelize.col('quantity')), 'total_orders'],
+        [sequelize.fn('SUM', sequelize.literal('quantity * unit_price')), 'total_revenue']
       ],
       include: [{
         model: Product,
-        as: 'product',
         attributes: [],
-        include: [{
-          model: Category,
-          as: 'category',
-          attributes: ['category_name']
-        }]
+        required: true
       }],
-      group: ['product_id', 'product.category_id'],  // Thêm product_id và category_id vào GROUP BY
-      order: [[sequelize.literal('total_revenue'), 'DESC']]
+      group: ['product.category_id'],
+      raw: true
     });
-    
+
+    // 4. Tạo map để dễ truy xuất dữ liệu
+    const statsMap = new Map();
+
+    // Khởi tạo dữ liệu cho tất cả danh mục
+    categories.forEach(category => {
+      statsMap.set(category.category_id, {
+        name: category.category_name,
+        total_products: 0,
+        total_orders: 0,
+        total_revenue: 0
+      });
+    });
+
+    // Thêm số lượng sản phẩm
+    productStats.forEach(stat => {
+      if (statsMap.has(stat.category_id)) {
+        const data = statsMap.get(stat.category_id);
+        data.total_products = parseInt(stat.dataValues.total_products) || 0;
+      }
+    });
+
+    // Thêm số đơn hàng và doanh thu
+    orderStats.forEach(stat => {
+      const categoryId = stat['product.category_id'];
+      if (statsMap.has(categoryId)) {
+        const data = statsMap.get(categoryId);
+        data.total_orders = parseInt(stat.total_orders) || 0;
+        data.total_revenue = parseFloat(stat.total_revenue) || 0;
+      }
+    });
+
+    // 5. Chuyển đổi map thành array và sắp xếp
+    let result = Array.from(statsMap.values());
+    result.sort((a, b) => b.total_revenue - a.total_revenue);
+
     res.status(200).send(result);
   } catch (err) {
+    console.error('Category Performance Error:', err);
     res.status(500).send({
-      message: err.message || "Đã xảy ra lỗi khi lấy thống kê theo danh mục."
+      message: "Đã xảy ra lỗi khi lấy thống kê theo danh mục.",
+      error: err.message
     });
   }
 };
-
 
 // Lấy thống kê đơn hàng theo trạng thái
 exports.getOrderStatusStats = async (req, res) => {

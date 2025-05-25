@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quản lý Khách hàng - KhoaFood</title>
+    <title>Quản lý Nhân viên - KhoaFood</title>
     <link rel="stylesheet" href="/css/customers.css">
 </head>
 <body>
@@ -14,9 +14,7 @@
             <a href="employee.html" class="active">Quản lý nhân viên</a>
         </nav>
         <div class="user-actions">
-            <a href="employee_dashboard.html">
-                <button class="logout-btn">Đăng xuất</button>
-            </a>>
+            <button class="logout-btn" onclick="logout()">Đăng xuất</button>
         </div>
     </header>
 
@@ -26,91 +24,36 @@
                 <li><a href="admin_dashboard.html">Tổng Quan</a></li>
                 <li><a href="orders.html">Đơn Hàng</a></li>
                 <li><a href="product_management.html">Sản Phẩm</a></li>
-                <li><a href="customers.html">Khách Hàng</a></li>
                 <li><a href="promotions.html">Khuyến Mãi</a></li>
-                <li><a href="reviews.html">Đánh Giá & Phản Hồi</a></li>
-                <li><a href="employee.html">Nhân viên</a></li>
+                <li><a href="employee.html" class="active">Nhân viên</a></li>
             </ul>
         </aside>
 
         <main class="main-content">
-            <section id="customers" class="customers-section">
+            <section id="employees" class="employees-section">
                 <h2>Danh sách nhân viên</h2>
-                <a href="add_employee.html">
-                    <button class="add-btn">Thêm nhân viên</button> 
-                </a>
-                <table class="customers-table">
+                <div class="actions">
+                    <input type="text" id="search-input" placeholder="Tìm kiếm nhân viên..." oninput="searchEmployees()">
+                    <button class="add-btn" onclick="window.location.href='add_employee.html'">Thêm nhân viên</button>
+                </div>
+                <table class="employees-table">
                     <thead>
                         <tr>
                             <th>Tên</th>
-                            <th>Tài khoản</th>
-                            <th>Mật khẩu</th>
+                            <th>Email</th>
+                            <th>Số điện thoại</th>
+                            <th>Vai trò</th>
                             <th>Hành động</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>Nguyễn Văn A</td>
-                            <td>taikhoan</td>
-                            <td>matkhau</td>
-                            <td>
-                                <a href="add_employee.html">
-                                    <button class="edit-btn">Sửa</button>
-                                </a>
-                                <button class="delete-btn">Xóa</button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Nguyễn Văn A</td>
-                            <td>taikhoan</td>
-                            <td>matkhau</td>
-                            <td>
-                                <a href="add_employee.html">
-                                    <button class="edit-btn">Sửa</button>
-                                </a>
-                                <button class="delete-btn">Xóa</button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Nguyễn Văn A</td>
-                            <td>taikhoan</td>
-                            <td>matkhau</td>
-                            <td>
-                                <a href="add_employee.html">
-                                    <button class="edit-btn">Sửa</button>
-                                </a>
-                                <button class="delete-btn">Xóa</button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Nguyễn Văn A</td>
-                            <td>taikhoan</td>
-                            <td>matkhau</td>
-                            <td>
-                                <a href="add_employee.html">
-                                    <button class="edit-btn">Sửa</button>
-                                </a>
-                                <button class="delete-btn">Xóa</button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Nguyễn Văn A</td>
-                            <td>taikhoan</td>
-                            <td>matkhau</td>
-                            <td>
-                                <a href="add_employee.html">
-                                    <button class="edit-btn">Sửa</button>
-                                </a>
-                                <button class="delete-btn">Xóa</button>
-                            </td>
-                        </tr>
-                    
+                    <tbody id="employees-tbody">
+                        <!-- Danh sách nhân viên sẽ được tải từ backend -->
                     </tbody>
                 </table>
+                <!-- Khu vực phân trang -->
+                <div id="pagination-container" class="pagination">
+                    <!-- Các nút phân trang sẽ được thêm động -->
+                </div>
             </section>
         </main>
     </div>
@@ -118,5 +61,7 @@
     <footer>
         <p>© 2025 KhoaFood. ALL RIGHT RESERVED.</p>
     </footer>
+
+    <script src="/js/employee.js"></script>
 </body>
 </html>

@@ -5,94 +5,117 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us - KhoaFood</title>
     <link rel="stylesheet" href="/css/about_us.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <header>
-        <div class="logo">KhoaFood</div>
+        <div class="logo">
+            <img src="/images/logo.png" alt="KhoaFood Logo">
+            <span>KhoaFood</span>
+        </div>
         <nav>
-            <a href="home.html" class="active">Trang chủ</a>
+            <a href="home.html">Trang chủ</a>
             <a href="menu.html">Menu</a>
             <a href="how_it_works.html">Cách hoạt động</a>
-            <a href="about_us.html">Về chúng tôi</a>
+            <a href="about_us.html" class="active">Về chúng tôi</a>
             <a href="user_profile.html">Tài khoản</a>
             <a href="admin_dashboard.html">Admin</a>
         </nav>
         <div class="user-actions">
-            <a href="chart.html">
-                <button class="cart">Giỏ hàng</button>
+            <a href="chart.html" class="cart-btn">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">0</span>
             </a>
-           `<a href="login_register.html">
-               <button class="login-btn">Đăng nhập/ Đăng ký</button>
-            </a>    
+            <a href="login_register.html" class="login-btn">
+                <i class="fas fa-user"></i>
+                <span>Đăng nhập</span>
+            </a>
         </div>
     </header>
 
-
     <main>
         <section class="about-hero">
-            <div class="about-hero-text">
-                <h1>Chúng tôi cung cấp thực phẩm lành mạnh cho bạn.</h1>
-                <p>Câu chuyện của chúng tôi bắt đầu với tầm nhìn tạo ra một trải nghiệm ẩm thực độc đáo, kết hợp giữa tinh hoa ẩm thực, dịch vụ tuyệt vời và không gian đầy sức sống. Được xây dựng trên nền tảng văn hóa ẩm thực phong phú của thành phố, chúng tôi mong muốn tôn vinh giá trị địa phương trong khi hòa quyện cùng hương vị toàn cầu.</p>
-                <p>Chúng tôi tin rằng ẩm thực không chỉ là món ăn mà còn là một trải nghiệm trọn vẹn. Đội ngũ nhân viên tận tâm và thân thiện của chúng tôi luôn nỗ lực mang đến cho bạn những khoảnh khắc đáng nhớ trong từng lần ghé thăm.</p>
-            </div>
-            <div class="about-hero-image">
-                <img src="/images/about_us.png" alt="About Us Image">
+            <div class="about-hero-content">
+                <div class="about-hero-text">
+                    <h1>Chúng tôi cung cấp món ngon cho bạn</h1>
+                    <p>Câu chuyện của chúng tôi bắt đầu với tầm nhìn tạo ra một trải nghiệm ẩm thực độc đáo, kết hợp giữa tinh hoa ẩm thực, dịch vụ tuyệt vời và không gian đầy sức sống. Được xây dựng trên nền tảng văn hóa ẩm thực phong phú của thành phố, chúng tôi mong muốn tôn vinh giá trị địa phương trong khi hòa quyện cùng hương vị toàn cầu.</p>
+                    <p>Chúng tôi tin rằng ẩm thực không chỉ là món ăn mà còn là một trải nghiệm trọn vẹn. Đội ngũ nhân viên tận tâm và thân thiện của chúng tôi luôn nỗ lực mang đến cho bạn những khoảnh khắc đáng nhớ trong từng lần ghé thăm.</p>
+                    <div class="about-cta">
+                        <a href="menu.html" class="cta-btn primary">Xem Menu</a>
+                        <a href="how_it_works.html" class="cta-btn secondary">Tìm hiểu thêm</a>
+                    </div>
+                </div>
+                <div class="about-hero-image">
+                    <img src="/images/about_us.png" alt="KhoaFood Experience">
+                </div>
             </div>
         </section>
 
-        <section class="about-info">
-            <div class="info-item">
-                <h2>3</h2>
-                <p>Cơ sở</p>
-            </div>
-            <div class="info-item">
-                <h2>2025</h2>
-                <p>Từ</p>
-            </div>
-            <div class="info-item">
-                <h2>65+</h2>
-                <p>Nhân viên</p>
-            </div>
-            <div class="info-item">
-                <h2>100%</h2>
-                <p>Khách hài lòng</p>
+        <section class="about-stats">
+            <div class="stats-container">
+                <div class="stat-item">
+                    <span class="stat-number">3</span>
+                    <span class="stat-label">Cơ sở</span>
+                    <i class="fas fa-store"></i>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">2025</span>
+                    <span class="stat-label">Thành lập từ</span>
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">65+</span>
+                    <span class="stat-label">Nhân viên</span>
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Khách hài lòng</span>
+                    <i class="fas fa-heart"></i>
+                </div>
             </div>
         </section>
 
         <section class="testimonials">
-            <h2>Khách hàng của chúng tôi nói gì</h2>
+            <h2>Khách hàng nói gì về chúng tôi</h2>
             <div class="testimonial-grid">
                 <div class="testimonial-item">
-                    <h3>“Tuyệt vời”</h3>
-                    <p>Món ăn ngon!</p>
-                    <div class="testimonial-divider"></div>
+                    <div class="testimonial-content">
+                        <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+                        <h3>Tuyệt vời</h3>
+                        <p>Món ăn ngon, phục vụ chuyên nghiệp. Tôi sẽ quay lại!</p>
+                    </div>
                     <div class="testimonial-author">
-                        <img src="/images/customer_1.png" alt="Sophire Robson">
-                        <div>
+                        <img src="/images/user_avatar.png" alt="Sophire Robson">
+                        <div class="author-info">
                             <h4>Sophire Robson</h4>
                             <p>Los Angeles, CA</p>
                         </div>
                     </div>
                 </div>
                 <div class="testimonial-item">
-                    <h3>“Đồ ăn ngoan”</h3>
-                    <p>Món ăn ngon!</p>
-                    <div class="testimonial-divider"></div>
+                    <div class="testimonial-content">
+                        <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+                        <h3>Đồ ăn ngon</h3>
+                        <p>Chất lượng món ăn rất tuyệt vời, giá cả hợp lý!</p>
+                    </div>
                     <div class="testimonial-author">
-                        <img src="/images/customer_2.png" alt="Matt Cannon">
-                        <div>
+                        <img src="/images/user_avatar.png" alt="Matt Cannon">
+                        <div class="author-info">
                             <h4>Matt Cannon</h4>
                             <p>San Diego, CA</p>
                         </div>
                     </div>
                 </div>
                 <div class="testimonial-item">
-                    <h3>“Đồ ăn siêu ngon!”</h3>
-                    <p>Món ăn ngon!</p>
-                    <div class="testimonial-divider"></div>
+                    <div class="testimonial-content">
+                        <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+                        <h3>Đồ ăn siêu ngon!</h3>
+                        <p>Không gian đẹp, nhân viên thân thiện, món ăn tuyệt hảo!</p>
+                    </div>
                     <div class="testimonial-author">
-                        <img src="/images/customer_3.png" alt="Andy Smith">
-                        <div>
+                        <img src="/images/user_avatar.png" alt="Andy Smith">
+                        <div class="author-info">
                             <h4>Andy Smith</h4>
                             <p>San Francisco, CA</p>
                         </div>
@@ -104,34 +127,42 @@
 
     <footer>
         <div class="footer-content">
-            <div>
-                <h4>Company</h4>
-                <a href="#">About Us</a>
-                <a href="#">How It Work</a>
-                <a href="#">Career</a>
+            <div class="footer-section">
+                <h4>Công ty</h4>
+                <a href="about_us.html">Về chúng tôi</a>
+                <a href="how_it_works.html">Cách hoạt động</a>
+                <a href="careers.html">Tuyển dụng</a>
             </div>
-            <div>
-                <h4>Policy</h4>
-                <a href="#">FAQ</a>
-                <a href="#">Privacy</a>
-                <a href="#">Shipping</a>
+            <div class="footer-section">
+                <h4>Chính sách</h4>
+                <a href="faq.html">FAQ</a>
+                <a href="privacy.html">Bảo mật</a>
+                <a href="shipping.html">Vận chuyển</a>
             </div>
-            <div>
-                <h4>Get In Touch</h4>
-                <p>+62 896 7311 2766</p>
-                <p>food@example.com</p>
+            <div class="footer-section">
+                <h4>Liên hệ</h4>
+                <p><i class="fas fa-phone"></i> +62 896 7311 2766</p>
+                <p><i class="fas fa-envelope"></i> food@example.com</p>
             </div>
-            <div>
-                <div class="logo">KhoaFood</div>
-                <p>Hà Đông, Hà Nội</p>
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <img src="/images/logo.png" alt="KhoaFood Logo">
+                    <span>KhoaFood</span>
+                </div>
+                <p><i class="fas fa-map-marker-alt"></i> Hà Đông, Hà Nội</p>
                 <div class="social-icons">
-                    <a href="#">Facebook</a>
-                    <a href="#">Instagram</a>
-                    <a href="#">Twitter</a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
                 </div>
             </div>
         </div>
-        <p class="copyright">© 2025 KhoaFood. ALL RIGHT RESERVED.</p>
+        <div class="copyright">
+            <p>© 2025 KhoaFood. ALL RIGHT RESERVED.</p>
+        </div>
     </footer>
+
+    <script src="/js/about_us.js"></script>
 </body>
+</html>
 </html>

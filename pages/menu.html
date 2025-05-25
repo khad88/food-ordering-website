@@ -1,144 +1,266 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KhoaFood Menu</title>
+    <title>Menu - KhoaFood</title>
     <link rel="stylesheet" href="/css/menu.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Additional styles for dynamic features */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 18px;
+            color: #666;
+        }
+        
+        .error {
+            text-align: center;
+            padding: 20px;
+            color: #e74c3c;
+            background-color: #fdf2f2;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .search-box {
+            margin: 30px 0;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .search-box input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        
+        .search-box input:focus {
+            border-color: #ffcb45;
+        }
+        
+        .search-box button {
+            padding: 12px 25px;
+            background: #ffcb45;
+            color: #333;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .search-box button:hover {
+            background: #e6b73d;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+        
+        .pagination button {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 14px;
+            min-width: 45px;
+            transition: all 0.3s;
+        }
+        
+        .pagination button:hover:not(:disabled) {
+            background: #f8f9fa;
+            border-color: #ffcb45;
+        }
+        
+        .pagination button.active {
+            background: #ffcb45;
+            color: #333;
+            border-color: #ffcb45;
+            font-weight: bold;
+        }
+        
+        .pagination button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .menu-item {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        
+        .menu-item img {
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .menu-item h2 {
+            font-size: 18px;
+            margin: 10px 0;
+            color: #333;
+        }
+        
+        .menu-item h3 {
+            font-size: 16px;
+            color: #e74c3c;
+            font-weight: bold;
+            margin: 8px 0;
+        }
+        
+        .menu-item p {
+            font-size: 14px;
+            color: #666;
+            margin: 5px 0;
+            line-height: 1.4;
+        }
+        
+        .menu-item a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        /* Make filters responsive */
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 30px 0;
+        }
+        
+        .filters button {
+            transition: all 0.3s;
+        }
+        
+        .filters button:hover {
+            background-color: #e6b73d;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <div class="logo">KhoaFood</div>
+        <div class="logo">
+            <img src="/images/logo.png" alt="KhoaFood Logo">
+            <span>KhoaFood</span>
+        </div>
         <nav>
-            <a href="home.html" class="active">Trang chủ</a>
-            <a href="menu.html">Menu</a>
+            <a href="home.html">Trang chủ</a>
+            <a href="menu.html" class="active">Menu</a>
             <a href="how_it_works.html">Cách hoạt động</a>
             <a href="about_us.html">Về chúng tôi</a>
             <a href="user_profile.html">Tài khoản</a>
             <a href="admin_dashboard.html">Admin</a>
         </nav>
         <div class="user-actions">
-            <a href="chart.html">
-                <button class="cart">Giỏ hàng</button>
+            <a href="chart.html" class="cart-btn">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">0</span>
             </a>
-           `<a href="login_register.html">
-               <button class="login-btn">Đăng nhập/ Đăng ký</button>
-            </a>    
+            <a href="login_register.html" class="login-btn">
+                <i class="fas fa-user"></i>
+                <span>Đăng nhập</span>
+            </a>
         </div>
     </header>
 
     <main>
-        <h1>Menu</h1>
-        <p>Hãy chọn món bạn muốn ăn!</p>
-        <div class="filters">
-            <button class="active">Tất cả</button>
-            <button>Ăn nhẹ</button>
-            <button>Món chính</button>
-            <button>Đồ uống</button>
-            <button>Tráng miệng</button>
-        </div>
-        <div class="menu-grid">
-            <div class="menu-item">
-                <a href="product.html">
-                  <img src="/images/trung_op_la.png" alt="Trứng ốp la">
-                </a>
-                <h3>20.000 VND</h3>
-                <h2>Trứng ốp la</h2>
-                <p>Mô tả về món ăn</p>
-                <p>Danh muc</p>
-                <p>Con hang</p>
+        <section class="menu-hero">
+            <div class="menu-hero-content">
+                <h1>Menu của chúng tôi</h1>
+                <p>Khám phá thế giới ẩm thực đa dạng và phong phú</p>
             </div>
-            <div class="menu-item">
-                <a href="product.html">
-                  <img src="/images/pizza.png" alt="Pizza">
-                </a>
-                <h3>20.000 VND</h3>
-                <h2>Pizza</h2>
-                <p>Mô tả về món ăn</p>
-                <p>Danh muc</p>
-                <p>Con hang</p>
+        </section>
+
+        <section class="menu-section">
+            <!-- Search box -->
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Tìm kiếm món ăn...">
+                <button onclick="searchProducts()">
+                    <i class="fas fa-search"></i>
+                    Tìm kiếm
+                </button>
             </div>
-            <div class="menu-item">
-                <img src="/images/cocktail.png" alt="Martinez Cocktail">
-                <h3>20.000 VND</h3>
-                <h2>Martinez Cocktail</h2>
-                <p>Mô tả về món ăn</p>
-                <p>Danh muc</p>
-                <p>Con hang</p>
+            
+            <!-- Category filters -->
+            <div class="filters" id="categoryFilters">
+                <button class="active" onclick="filterByCategory('all')">Tất cả</button>
             </div>
-            <div class="menu-item">
-                <img src="/images/butterscotch.png" alt="Bánh Butterscotch">
-                <h3>20.000 VND</h3>
-                <h2>Bánh Butterscotch</h2>
-                <p>Mô tả về món ăn</p>
-                <p>Danh muc</p>
-                <p>Con hang</p>
+            
+            <!-- Loading/Error states -->
+            <div id="loadingState" class="loading" style="display: none;">
+                <p><i class="fas fa-spinner fa-spin"></i> Đang tải dữ liệu...</p>
             </div>
-            <div class="menu-item">
-                <img src="/images/nuoc_ep.png" alt="Nước ép">
-                <h3>20.000 VND</h3>
-                <h2>Nước ép</h2>
-                <p>Mô tả về món ăn</p>
-                <p>Danh muc</p>
-                <p>Con hang</p>
+            
+            <div id="errorState" class="error" style="display: none;"></div>
+            
+            <!-- Menu grid -->
+            <div class="menu-grid" id="menuGrid">
+                <!-- Products will be loaded here -->
             </div>
-            <div class="menu-item">
-                <img src="/images/kem_chocolate.png" alt="Kem Chocolate">
-                <h3>20.000 VND</h3>
-                <h2>Kem Chocolate</h2>
-                <p>Mô tả về món ăn</p>
-                <p>Danh muc</p>
-                <p>Con hang</p>
+            
+            <!-- Pagination -->
+            <div class="pagination" id="pagination" style="display: none;">
             </div>
-            <div class="menu-item">
-                <img src="/images/burger.png" alt="Cheese Burger">
-                <h3>20.000 VND</h3>
-                <h2>Cheese Burger</h2>
-                <p>Mô tả về món ăn</p>
-                <p>Danh muc</p>
-                <p>Con hang</p>
-            </div>
-            <div class="menu-item">
-                <img src="/images/waffles.png" alt="Classic Waffles">
-                <h3>20.000 VND</h3>
-                <h2>Classic Waffles</h2>
-                <p>Mô tả về món ăn</p>
-                <p>Danh muc</p>
-                <p>Con hang</p>
-            </div>
-        </div>
+        </section>
     </main>
 
     <footer>
         <div class="footer-content">
-            <div>
-                <h4>Company</h4>
-                <a href="#">About Us</a>
-                <a href="#">How It Work</a>
-                <a href="#">Career</a>
+            <div class="footer-section">
+                <h4>Công ty</h4>
+                <a href="about_us.html">Về chúng tôi</a>
+                <a href="how_it_works.html">Cách hoạt động</a>
+                <a href="careers.html">Tuyển dụng</a>
             </div>
-            <div>
-                <h4>Policy</h4>
-                <a href="#">FAQ</a>
-                <a href="#">Privacy</a>
-                <a href="#">Shipping</a>
+            <div class="footer-section">
+                <h4>Chính sách</h4>
+                <a href="faq.html">FAQ</a>
+                <a href="privacy.html">Bảo mật</a>
+                <a href="shipping.html">Vận chuyển</a>
             </div>
-            <div>
-                <h4>Get In Touch</h4>
-                <p>+62 896 7311 2766</p>
-                <p>food@example.com</p>
+            <div class="footer-section">
+                <h4>Liên hệ</h4>
+                <p><i class="fas fa-phone"></i> +62 896 7311 2766</p>
+                <p><i class="fas fa-envelope"></i> food@example.com</p>
             </div>
-            <div>
-                <div class="logo">KhoaFood</div>
-                <p>Hà Đông, Hà Nội</p>
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <img src="/images/logo.png" alt="KhoaFood Logo">
+                    <span>KhoaFood</span>
+                </div>
+                <p><i class="fas fa-map-marker-alt"></i> Hà Đông, Hà Nội</p>
                 <div class="social-icons">
-                    <a href="#">Facebook</a>
-                    <a href="#">Instagram</a>
-                    <a href="#">Twitter</a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
                 </div>
             </div>
         </div>
-        <p class="copyright">© 2025 Let'sFood. ALL RIGHT RESERVED.</p>
+        <div class="copyright">
+            <p>© 2025 KhoaFood. ALL RIGHT RESERVED.</p>
+        </div>
     </footer>
+
+    <script src="/js/menu.js"></script>
 </body>
 </html>

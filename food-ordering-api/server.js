@@ -6,7 +6,16 @@ const app = express();
 
 // Cấu hình CORS
 const corsOptions = {
-  origin: "http://localhost:8081" // Thay đổi theo domain của frontend
+  origin: [
+    "http://localhost:3000",
+    "http://localhost:8081", 
+    "http://localhost:5000",
+    "http://127.0.0.1:8081",
+    "http://127.0.0.1:3000",
+    "http://127.0.0.1:5000",
+    "http://127.0.0.1:5500",
+    "null" // Cho phép file:// protocol (khi mở HTML trực tiếp)
+  ]
 };
 app.use(cors(corsOptions));
 

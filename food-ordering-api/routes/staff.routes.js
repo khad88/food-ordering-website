@@ -101,6 +101,12 @@ module.exports = function(app) {
       controller.searchStaffByName
     );
   
+    // Lấy thông tin nhân viên qua ID (chỉ manager)
+  app.get(
+    "/api/staff/:id",
+    [authJwt.verifyToken, authJwt.isManager],
+    controller.getStaffById
+  );
 };
 
 

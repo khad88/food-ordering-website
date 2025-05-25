@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cách hoạt động - KhoaFood</title>
-    <link rel="stylesheet" href="/css/how_it_works.css">
+    <title>Chi tiết hóa đơn - KhoaFood</title>
+    <link rel="stylesheet" href="/css/order_detail.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
@@ -16,63 +16,33 @@
         <nav>
             <a href="home.html">Trang chủ</a>
             <a href="menu.html">Menu</a>
-            <a href="how_it_works.html" class="active">Cách hoạt động</a>
+            <a href="how_it_works.html">Cách hoạt động</a>
             <a href="about_us.html">Về chúng tôi</a>
             <a href="user_profile.html">Tài khoản</a>
             <a href="admin_dashboard.html">Admin</a>
         </nav>
         <div class="user-actions">
-            <a href="chart.html" class="cart-btn">
+            <a href="cart.html" class="cart-btn">
                 <i class="fas fa-shopping-cart"></i>
                 <span class="cart-count">0</span>
             </a>
-            <a href="login_register.html" class="login-btn">
+            <a href="login_register.html" class="login-btn" id="auth-btn">
                 <i class="fas fa-user"></i>
-                <span>Đăng nhập</span>
+                <span id="auth-text">Đăng xuất</span>
             </a>
         </div>
     </header>
 
     <main>
-        <section class="how-it-works">
-            <div class="section-header">
-                <h1>Cách Đặt Món Tại KhoaFood</h1>
-                <p>Chỉ với 4 bước đơn giản, món ăn ngon sẽ đến tay bạn</p>
+        <section class="order-detail-section">
+            <h1>Chi tiết hóa đơn</h1>
+            <div id="order-detail-container">
+                <!-- Thông tin chi tiết hóa đơn sẽ được tải từ backend -->
+                <div class="loading">Đang tải chi tiết hóa đơn...</div>
             </div>
-            <div class="steps">
-                <div class="step">
-                    <div class="step-icon">
-                        <img src="/images/order.png" alt="Đặt món">
-                        <span class="step-number">1</span>
-                    </div>
-                    <h3>Đặt món</h3>
-                    <p>Chọn món ăn yêu thích từ thực đơn đa dạng của chúng tôi</p>
-                </div>
-                <div class="step">
-                    <div class="step-icon">
-                        <img src="/images/cook.jpg" alt="Chuẩn bị">
-                        <span class="step-number">2</span>
-                    </div>
-                    <h3>Chuẩn bị</h3>
-                    <p>Đầu bếp chuyên nghiệp chế biến với nguyên liệu tươi ngon</p>
-                </div>
-                <div class="step">
-                    <div class="step-icon">
-                        <img src="/images/delivery.png" alt="Giao hàng">
-                        <span class="step-number">3</span>
-                    </div>
-                    <h3>Giao hàng</h3>
-                    <p>Đội ngũ giao hàng nhanh chóng đưa món ăn đến tận nơi</p>
-                </div>
-                <div class="step">
-                    <div class="step-icon">
-                        <img src="/images/eat.jpg" alt="Thưởng thức">
-                        <span class="step-number">4</span>
-                    </div>
-                    <h3>Thưởng thức</h3>
-                    <p>Tận hưởng bữa ăn ngon và chia sẻ cảm nhận với chúng tôi</p>
-                </div>
-            </div>
+            <button class="back-btn" onclick="goBack()">
+                <i class="fas fa-arrow-left"></i> Quay lại
+            </button>
         </section>
     </main>
 
@@ -112,6 +82,17 @@
             <p>© 2025 KhoaFood. ALL RIGHT RESERVED.</p>
         </div>
     </footer>
-    <script src="/js/how_it_works.js"></script>
+
+    <!-- Loading và thông báo -->
+    <div id="loading" class="loading" style="display: none;">Đang tải...</div>
+    <div id="error-message" class="error-message" style="display: none;">
+        <i class="fas fa-exclamation-circle"></i>
+        <span></span>
+    </div>
+    <div id="message-toast" class="message-toast" style="display: none;">
+        <span id="toast-message"></span>
+    </div>
+
+    <script src="/js/order_detail.js"></script>
 </body>
-</html></html>
+</html>

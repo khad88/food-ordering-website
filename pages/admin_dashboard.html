@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Tổng Quan - KhoaFood</title>
     <link rel="stylesheet" href="/css/admin_dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
@@ -15,21 +16,17 @@
             <a href="admin_dashboard.html" class="active">Tổng Quan</a>
         </nav>
         <div class="user-actions">
-            <a href="employee_dashboard.html">
-                <button class="logout-btn">Đăng xuất</button>
-            </a>>
+            <button class="logout-btn" onclick="logout()">Đăng xuất</button>
         </div>
     </header>
 
     <div class="admin-container">
         <aside class="sidebar">
             <ul>
-                <li><a href="admin_dashboard.html">Tổng Quan</a></li>
+                <li><a href="admin_dashboard.html" class="active">Tổng Quan</a></li>
                 <li><a href="orders.html">Đơn Hàng</a></li>
                 <li><a href="product_management.html">Sản Phẩm</a></li>
-                <li><a href="customers.html">Khách Hàng</a></li>
                 <li><a href="promotions.html">Khuyến Mãi</a></li>
-                <li><a href="reviews.html">Đánh Giá & Phản Hồi</a></li>
                 <li><a href="employee.html">Nhân viên</a></li>
             </ul>
         </aside>
@@ -39,28 +36,68 @@
                 <h1>Dashboard Tổng Quan</h1>
                 <div class="stats-grid">
                     <div class="stat-item">
-                        <h3>Tổng số khách hàng 7 ngay</h3>
-                        <p>1500</p>
+                        <h3>Tổng số đơn hàng</h3>
+                        <p id="total-orders">Đang tải...</p>
                     </div>
                     <div class="stat-item">
-                        <h3>Số đơn hàng đang xử lý</h3>
-                        <p>45</p>
+                        <h3>Tổng doanh thu</h3>
+                        <p id="total-revenue">Đang tải...</p>
                     </div>
                     <div class="stat-item">
-                        <h3>Doanh thu 7 ngay</h3>
-                        <p>5,000,000 VND</p>
+                        <h3>Tổng số khách hàng</h3>
+                        <p id="total-users">Đang tải...</p>
                     </div>
                     <div class="stat-item">
-                        <h3>Sản phẩm bán chạy theo danh muc</h3>
-                        <p>Pizza</p>
+                        <h3>Số đơn hàng hôm nay</h3>
+                        <p id="orders-today">Đang tải...</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>Doanh thu hôm nay</h3>
+                        <p id="revenue-today">Đang tải...</p>
                     </div>
                 </div>
             </section>
 
-            <section id="statistics" class="charts">
-                <h2>Biểu đồ doanh thu / tuần</h2>
-                <div class="chart-container">
-                    <canvas id="revenueChart"></canvas>
+            <section id="statistics" class="charts section-container">
+                <div class="section-header">
+                    <h2>Biểu đồ doanh thu</h2>
+                    <button class="toggle-btn" data-target="statistics-content">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+                <div id="statistics-content" class="section-content hidden">
+                    <div class="chart-container">
+                        <canvas id="dailyRevenueChart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="monthlyRevenueChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section id="top-products" class="top-products section-container">
+                <div class="section-header">
+                    <h2>Top sản phẩm bán chạy</h2>
+                    <button class="toggle-btn" data-target="top-products-content">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+                <div id="top-products-content" class="section-content hidden">
+                    <div class="loading-spinner hidden"></div>
+                    <ul id="top-products-list"></ul>
+                </div>
+            </section>
+
+            <section id="order-status" class="order-status section-container">
+                <div class="section-header">
+                    <h2>Thống kê đơn hàng theo trạng thái</h2>
+                    <button class="toggle-btn" data-target="order-status-content">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+                <div id="order-status-content" class="section-content hidden">
+                    <div class="loading-spinner hidden"></div>
+                    <ul id="order-status-list"></ul>
                 </div>
             </section>
         </main>
@@ -70,28 +107,6 @@
         <p>© 2025 KhoaFood. ALL RIGHT RESERVED.</p>
     </footer>
 
-    <script>
-        const ctx = document.getElementById('revenueChart').getContext('2d');
-        const revenueChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['Ngày 1', 'Ngày 2', 'Ngày 3', 'Ngày 4', 'Ngày 5', 'Ngày 6', 'Ngày 7'],
-                datasets: [{
-                    label: 'Doanh thu (VND)',
-                    data: [1200000, 1500000, 1800000, 2000000, 2200000, 2500000, 3000000],
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    </script>
+    <script src="/js/admin_dashboard.js"></script>
 </body>
 </html>

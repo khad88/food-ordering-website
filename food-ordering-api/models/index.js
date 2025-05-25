@@ -60,6 +60,10 @@ db.orders.belongsTo(db.users, { foreignKey: 'user_id' });
 db.staffs.hasMany(db.orders, { foreignKey: 'staff_id' });
 db.orders.belongsTo(db.staffs, { foreignKey: 'staff_id' });
 
+// Order - Promotion
+db.promotions.hasMany(db.orders, { foreignKey: 'promotion_id' });
+db.orders.belongsTo(db.promotions, { foreignKey: 'promotion_id' });
+
 // Category - Product
 db.categories.hasMany(db.products, { foreignKey: 'category_id' });
 db.products.belongsTo(db.categories, { foreignKey: 'category_id' });

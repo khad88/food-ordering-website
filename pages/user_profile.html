@@ -5,10 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thông tin người dùng - KhoaFood</title>
     <link rel="stylesheet" href="/css/user_profile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <header>
-        <div class="logo">KhoaFood</div>
+        <div class="logo">
+            <img src="/images/logo.png" alt="KhoaFood Logo">
+            <span>KhoaFood</span>
+        </div>
         <nav>
             <a href="home.html">Trang chủ</a>
             <a href="menu.html">Menu</a>
@@ -18,11 +22,13 @@
             <a href="admin_dashboard.html">Admin</a>
         </nav>
         <div class="user-actions">
-            <a href="chart.html">
-                <button class="cart">Giỏ hàng</button>
+            <a href="chart.html" class="cart-btn">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">0</span>
             </a>
-            <a href="logout.html">
-                <button class="logout-btn">Đăng xuất</button>
+            <a href="login_register.html" class="login-btn">
+                <i class="fas fa-user"></i>
+                <span>Đăng nhập</span>
             </a>
         </div>
     </header>
@@ -36,78 +42,68 @@
 
         <!-- Thông tin chung -->
         <section id="general-info" class="tab-content active">
-        <div class="info-layout">
-            <!-- Thông tin cá nhân -->
-            <div class="user-info">
-                <h2>Thông tin cá nhân</h2>
-                <div class="info-container">
-                    <div class="avatar">
-                        <img src="/images/user_avatar.png" alt="Avatar">
-                    </div>
-                    <div class="details">
-                        <p><strong>Tên:</strong> Nguyễn Văn A</p>
-                        <p><strong>Email:</strong> nguyenvana@example.com</p>
-                        <p><strong>Số điện thoại:</strong> 0123 456 789</p>
-                        <p><strong>Địa chỉ:</strong> 123 Đường ABC, Quận XYZ, Hà Nội</p>
+            <div class="info-layout">
+                <!-- Thông tin cá nhân -->
+                <div class="user-info">
+                    <h2>Thông tin cá nhân</h2>
+                    <div class="info-container">
+                        <div class="avatar">
+                            <img src="/images/user_avatar.png" alt="Avatar">
+                        </div>
+                        <div class="details">
+                            <p><strong>Tên:</strong> <span id="user-name">...</span></p>
+                            <p><strong>Email:</strong> <span id="user-email">...</span></p>
+                            <p><strong>Số điện thoại:</strong> <span id="user-phone">...</span></p>
+                            <p><strong>Địa chỉ:</strong> <span id="user-address">...</span></p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Lịch sử mua hàng -->
-            <div class="order-history">
-                <h2>Lịch sử mua hàng</h2>
-                <table class="order-table">
-                    <thead>
-                        <tr>
-                            <th>Mã đơn hàng</th>
-                            <th>Ngày đặt</th>
-                            <th>Tổng tiền</th>
-                            <th>Trạng thái</th>
-                            <th>Chi tiết</th>
-                        </tr>
-                    </thead>
-                    <tbody id="order-history">
-                        
-                    </tbody>
-                </table>
-                <div class="pagination">
-                    
+                <!-- Lịch sử mua hàng -->
+                <div class="order-history">
+                    <h2>Lịch sử mua hàng</h2>
+                    <table class="order-table">
+                        <thead>
+                            <tr>
+                                <th>Mã đơn hàng</th>
+                                <th>Ngày đặt</th>
+                                <th>Tổng tiền</th>
+                                <th>Trạng thái</th>
+                                <th>Chi tiết</th>
+                            </tr>
+                        </thead>
+                        <tbody id="order-history">
+                            <!-- Lịch sử mua hàng sẽ được tải từ backend -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        </div>
         </section>
 
+        <!-- Cài đặt -->
         <section id="settings" class="tab-content">
             <h2>Cài đặt</h2>
-        
+
             <!-- Đổi thông tin cá nhân -->
             <div class="edit-user-info">
                 <h3>Đổi thông tin cá nhân</h3>
                 <form id="edit-user-form">
-                    
-        
-                    <!-- Đổi tên -->
                     <div class="settings-row">
                         <label for="edit-name">Tên:</label>
-                        <input type="text" id="edit-name" placeholder="Nhập tên mới" value="Nguyễn Văn A" required>
+                        <input type="text" id="edit-name" placeholder="Nhập tên mới" required>
                     </div>
-        
-                    <!-- Đổi số điện thoại -->
                     <div class="settings-row">
                         <label for="edit-phone">Số điện thoại:</label>
-                        <input type="text" id="edit-phone" placeholder="Nhập số điện thoại mới" value="0123 456 789" required>
+                        <input type="text" id="edit-phone" placeholder="Nhập số điện thoại mới" required>
                     </div>
-        
-                    <!-- Đổi địa chỉ -->
                     <div class="settings-row">
                         <label for="edit-address">Địa chỉ:</label>
-                        <input type="text" id="edit-address" placeholder="Nhập địa chỉ mới" value="123 Đường ABC, Quận XYZ, Hà Nội" required>
+                        <input type="text" id="edit-address" placeholder="Nhập địa chỉ mới" required>
                     </div>
-        
                     <button type="submit" class="cta-btn">Lưu thông tin</button>
                 </form>
             </div>
-        
+
             <!-- Đổi mật khẩu -->
             <div class="change-password">
                 <h3>Đổi mật khẩu</h3>
@@ -128,40 +124,43 @@
                 </form>
             </div>
         </section>
-
-        
     </main>
 
     <footer>
         <div class="footer-content">
-            <div>
-                <h4>Company</h4>
-                <a href="#">About Us</a>
-                <a href="#">How It Work</a>
-                <a href="#">Career</a>
+            <div class="footer-section">
+                <h4>Công ty</h4>
+                <a href="about_us.html">Về chúng tôi</a>
+                <a href="how_it_works.html">Cách hoạt động</a>
+                <a href="careers.html">Tuyển dụng</a>
             </div>
-            <div>
-                <h4>Policy</h4>
-                <a href="#">FAQ</a>
-                <a href="#">Privacy</a>
-                <a href="#">Shipping</a>
+            <div class="footer-section">
+                <h4>Chính sách</h4>
+                <a href="faq.html">FAQ</a>
+                <a href="privacy.html">Bảo mật</a>
+                <a href="shipping.html">Vận chuyển</a>
             </div>
-            <div>
-                <h4>Get In Touch</h4>
-                <p>+62 896 7311 2766</p>
-                <p>food@example.com</p>
+            <div class="footer-section">
+                <h4>Liên hệ</h4>
+                <p><i class="fas fa-phone"></i> +62 896 7311 2766</p>
+                <p><i class="fas fa-envelope"></i> food@example.com</p>
             </div>
-            <div>
-                <div class="logo">KhoaFood</div>
-                <p>Hà Đông, Hà Nội</p>
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <img src="/images/logo.png" alt="KhoaFood Logo">
+                    <span>KhoaFood</span>
+                </div>
+                <p><i class="fas fa-map-marker-alt"></i> Hà Đông, Hà Nội</p>
                 <div class="social-icons">
-                    <a href="#">Facebook</a>
-                    <a href="#">Instagram</a>
-                    <a href="#">Twitter</a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
                 </div>
             </div>
         </div>
-        <p class="copyright">© 2025 KhoaFood. ALL RIGHT RESERVED.</p>
+        <div class="copyright">
+            <p>© 2025 KhoaFood. ALL RIGHT RESERVED.</p>
+        </div>
     </footer>
 
     <script src="/js/user_profile.js"></script>
