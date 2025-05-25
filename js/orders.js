@@ -22,7 +22,13 @@ let totalPages = 1;
 // Tải danh sách đơn hàng
 async function fetchOrders() {
     try {
-        const response = await fetch(`${API_BASE_URL}/api/orders`, {
+        // Tạo URL với các tham số
+        let url = `${API_BASE_URL}/api/orders?page=${currentPage}&size=${pageSize}`;
+        if (currentFilter !== 'all') {
+            url += `&status=${encodeURIComponent(currentFilter)}`;
+        }
+
+        const response = await fetch(url, {
             headers: {
                 'x-access-token': token
             }
@@ -33,8 +39,15 @@ async function fetchOrders() {
         }
 
         const data = await response.json();
-        allOrders = data.orders; // Lưu trữ tất cả đơn hàng
-        filterAndDisplayOrders();
+        allOrders = data.orders;
+        totalPages = data.totalPages;
+
+        // Sắp xếp đơn hàng theo thời gian
+        allOrders.sort((a, b) => new Date(b.order_time) - new Date(a.order_time));
+
+        // Hiển thị đơn hàng và phân trang
+        renderOrders(allOrders);
+        setupPagination(totalPages, currentPage, data.totalItems);
     } catch (error) {
         console.error('Lỗi khi tải danh sách đơn hàng:', error);
         showError('Không thể tải danh sách đơn hàng. Vui lòng thử lại sau.');
@@ -42,40 +55,9 @@ async function fetchOrders() {
 }
 
 // Lọc và hiển thị đơn hàng theo trang
-function filterAndDisplayOrders(page = currentPage) {
+async function filterAndDisplayOrders(page = currentPage) {
     currentPage = page;
-    let filteredOrders = allOrders;
-
-    // Áp dụng bộ lọc nếu không phải 'all'
-    if (currentFilter !== 'all') {
-        filteredOrders = allOrders.filter(order => order.status === currentFilter);
-    }
-
-    // Sắp xếp đơn hàng theo trạng thái và thời gian
-    const statusOrder = {
-        'Chờ xác nhận': 1,
-        'Đang giao': 2,
-        'Đã giao': 3,
-        'Đã hủy': 4
-    };
-
-    filteredOrders.sort((a, b) => {
-        const statusComparison = statusOrder[a.status] - statusOrder[b.status];
-        if (statusComparison === 0) {
-            return new Date(b.order_time) - new Date(a.order_time);
-        }
-        return statusComparison;
-    });
-
-    // Tính toán phân trang
-    const totalPages = Math.ceil(filteredOrders.length / pageSize);
-    const startIndex = (currentPage - 1) * pageSize;
-    const endIndex = startIndex + pageSize;
-    const ordersToShow = filteredOrders.slice(startIndex, endIndex);
-
-    // Hiển thị đơn hàng và phân trang
-    renderOrders(ordersToShow);
-    setupPagination(totalPages, currentPage, filteredOrders.length);
+    await fetchOrders();
 }
 
 // Hiển thị phân trang
@@ -102,9 +84,9 @@ function setupPagination(totalPages, currentPage, totalItems) {
     const prevButton = document.createElement('button');
     prevButton.innerHTML = '<i class="fas fa-chevron-left"></i>';
     prevButton.disabled = currentPage === 1;
-    prevButton.onclick = () => {
+    prevButton.onclick = async () => {
         if (currentPage > 1) {
-            filterAndDisplayOrders(currentPage - 1);
+            await filterAndDisplayOrders(currentPage - 1);
         }
     };
     buttonsContainer.appendChild(prevButton);
@@ -121,7 +103,7 @@ function setupPagination(totalPages, currentPage, totalItems) {
         const pageButton = document.createElement('button');
         pageButton.textContent = i;
         pageButton.className = i === currentPage ? 'active' : '';
-        pageButton.onclick = () => filterAndDisplayOrders(i);
+        pageButton.onclick = async () => await filterAndDisplayOrders(i);
         buttonsContainer.appendChild(pageButton);
     }
 
@@ -129,9 +111,9 @@ function setupPagination(totalPages, currentPage, totalItems) {
     const nextButton = document.createElement('button');
     nextButton.innerHTML = '<i class="fas fa-chevron-right"></i>';
     nextButton.disabled = currentPage === totalPages;
-    nextButton.onclick = () => {
+    nextButton.onclick = async () => {
         if (currentPage < totalPages) {
-            filterAndDisplayOrders(currentPage + 1);
+            await filterAndDisplayOrders(currentPage + 1);
         }
     };
     buttonsContainer.appendChild(nextButton);
@@ -141,10 +123,10 @@ function setupPagination(totalPages, currentPage, totalItems) {
 }
 
 // Xử lý sự kiện click nút lọc
-function handleFilterClick(status) {
+async function handleFilterClick(status) {
     currentFilter = status;
     currentPage = 1; // Reset về trang đầu khi thay đổi filter
-    filterAndDisplayOrders(1);
+    await fetchOrders();
 
     // Cập nhật trạng thái active của các nút
     const filterButtons = document.querySelectorAll('.filter-btn');

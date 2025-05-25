@@ -148,7 +148,7 @@ exports.createFromCart = async (req, res) => {
 // Lấy tất cả đơn hàng (phân quyền)
 exports.getAllOrders = async (req, res) => {
     try {
-        const { page = 1, size = 10 } = req.query; // Lấy thông tin phân trang từ query
+        const { page = 1, size = 10, status } = req.query; // Thêm status vào query params
         const limit = parseInt(size);
         const offset = (parseInt(page) - 1) * limit;
 
@@ -157,6 +157,11 @@ exports.getAllOrders = async (req, res) => {
         // Nếu là người dùng, chỉ lấy đơn hàng của họ
         if (req.userType === 'user') {
             where.user_id = req.userId;
+        }
+
+        // Thêm điều kiện lọc theo trạng thái nếu có
+        if (status && status !== 'all') {
+            where.status = status;
         }
 
         // Lấy danh sách đơn hàng từ cơ sở dữ liệu
@@ -190,6 +195,7 @@ exports.getAllOrders = async (req, res) => {
         res.status(500).send({ message: error.message });
     }
 };
+
 // Xem chi tiết đơn hàng
 exports.getOrderById = async (req, res) => {
     try {
